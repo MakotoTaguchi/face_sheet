@@ -11,7 +11,7 @@ const SignIn = () => {
 
   return (
   <Button variant="contained" color="success" onClick={signInWithGoogle}>
-  Success
+  ログイン
   </Button>
   );
 };
