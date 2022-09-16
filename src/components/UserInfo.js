@@ -4,7 +4,11 @@ import { auth } from "../firebase";
 const UserInfo = () => {
   return (
     <div className="UserInfo">
-      <img src={auth.currentUser.photoURL} alt="profilephoto"/>
+      <img
+        className="UserImage"
+        src={auth.currentUser.photoURL}
+        alt="profilephoto"
+      />
       <p>{auth.currentUser.displayName}</p>
     </div>
   );
