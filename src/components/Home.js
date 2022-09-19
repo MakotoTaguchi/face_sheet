@@ -4,7 +4,7 @@ import { auth } from "../firebase";
 import Face from "./Face";
 
 import SignIn from "./SignIn";
-import SignOut from "./SignOut";
+// import SignOut from "./SignOut";
 import UserInfo from "./UserInfo";
 
 function Home() {
@@ -15,8 +15,8 @@ function Home() {
       {user ? (
         <div>
           <UserInfo />
-          <SignOut />
-          <Face />
+          {/* <SignOut /> */}
+          {/* <Face /> */}
         </div>
       ) : (
         <SignIn />
