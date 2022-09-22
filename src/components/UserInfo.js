@@ -18,7 +18,6 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import PersonIcon from "@mui/icons-material/Person";
 import TagFacesIcon from "@mui/icons-material/TagFaces";
-import Test1 from "./childComponents/Test1";
 import Face from "./Face";
 import User from "./childComponents/User";
 
@@ -198,7 +197,7 @@ export default function UserInfo() {
         </List>
         <Divider />
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+      <Box className="main" component="main" sx={{ flexGrow: 1, p: 3 }}>
         {count == 2 ? <Face /> : <User />}
       </Box>
     </Box>
