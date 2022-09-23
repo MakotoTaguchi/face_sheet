@@ -1,10 +1,3 @@
-export const columns = [
-  { Header: "id", accessor: "id" },
-  { Header: "名前", accessor: "name" },
-  { Header: "メールアドレス", accessor: "mail" },
-  { Header: "笑みポイント", accessor: "point" },
-];
-
 export const data = [
   {
     id: "1",

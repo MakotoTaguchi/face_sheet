@@ -1,0 +1,32 @@
+body {
+  background-color: #ddd;
+  padding: 20px 40px;
+  margin: 0;
+}
+
+table {
+  width: 100%;
+  border-spacing: 0;
+  table-layout: fixed;
+  border-left: solid 1px #444;
+  border-right: solid 1px #444;
+}
+
+thead {
+  text-align: left;
+}
+
+th,
+td {
+  border-bottom: solid 1px #444;
+  padding: 5px 0;
+  line-height: 1.5;
+}
+
+th {
+  border-top: solid 1px #444;
+}
+
+th span {
+  margin-left: 10px;
+}

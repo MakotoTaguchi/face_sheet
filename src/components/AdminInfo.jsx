@@ -21,6 +21,7 @@ import TagFacesIcon from "@mui/icons-material/TagFaces";
 import User from "./childComponents/User";
 import { Fragment } from "react";
 import Manage from "./Manage";
+import Manage2 from "./Manage2";
 
 const drawerWidth = 240;
 
@@ -109,8 +110,6 @@ export default function AdminInfo() {
   const linkSwitch2 = () => {
     setCount(2);
   };
-
-  console.log(count);
 
   return (
     <Fragment>
@@ -208,7 +207,8 @@ export default function AdminInfo() {
             if (count == 1) {
               return <User />;
             } else {
-              return <Manage />;
+              //   return <Manage />;
+              return <Manage2 />;
             }
           })()}
         </Box>
