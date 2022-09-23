@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "./Face.css";
-import NewPost from "./childComponents/NewPost";
+import NewPost2 from "./childComponents/NewPost2";
 import Smile from "./assets/smile.png";
 
-function Face() {
+function Face2() {
   const [file, setFile] = useState();
   const [image, setImage] = useState();
 
@@ -14,8 +14,8 @@ function Face() {
       img.onload = () => {
         setImage({
           url: img.src,
-          width: img.width / 5,
-          height: img.height / 5,
+          width: img.width / 8,
+          height: img.height / 8,
         });
       };
     };
@@ -26,7 +26,7 @@ function Face() {
   return (
     <div>
       {image ? (
-        <NewPost image={image} />
+        <NewPost2 image={image} />
       ) : (
         <div className="newPostCard">
           <div className="addPost">
@@ -49,4 +49,4 @@ function Face() {
   );
 }
 
-export default Face;
+export default Face2;

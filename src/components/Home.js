@@ -1,9 +1,8 @@
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase";
+import AdminInfo from "./AdminInfo";
 
-import SignIn from "./SignIn";
-import SignIn2 from "./SignIn2";
 import SignIn3 from "./SignIn3";
 import UserInfo from "./UserInfo";
 
@@ -14,11 +13,10 @@ function Home() {
     <div>
       {user ? (
         <div>
-          <UserInfo />
+          {/* <UserInfo /> */}
+          <AdminInfo />
         </div>
       ) : (
-        // <SignIn />
-        // <SignIn2 />
         <SignIn3 />
       )}
     </div>

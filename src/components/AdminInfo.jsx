@@ -19,8 +19,8 @@ import ListItemText from "@mui/material/ListItemText";
 import PersonIcon from "@mui/icons-material/Person";
 import TagFacesIcon from "@mui/icons-material/TagFaces";
 import User from "./childComponents/User";
-import Face2 from "./Face2";
 import { Fragment } from "react";
+import Manage from "./Manage";
 
 const drawerWidth = 240;
 
@@ -89,7 +89,7 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-export default function UserInfo() {
+export default function AdminInfo() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [count, setCount] = React.useState(1);
@@ -131,7 +131,7 @@ export default function UserInfo() {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" noWrap component="div">
-              社員用ページ
+              管理者用ページ
             </Typography>
           </Toolbar>
         </AppBar>
@@ -195,7 +195,7 @@ export default function UserInfo() {
                   <TagFacesIcon />
                 </ListItemIcon>
                 <ListItemText
-                  primary={"顔写真提出"}
+                  primary={"社員管理"}
                   sx={{ opacity: open ? 1 : 0 }}
                 />
               </ListItemButton>
@@ -208,7 +208,7 @@ export default function UserInfo() {
             if (count == 1) {
               return <User />;
             } else {
-              return <Face2 />;
+              return <Manage />;
             }
           })()}
         </Box>
