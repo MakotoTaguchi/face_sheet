@@ -22,6 +22,7 @@ import User from "./childComponents/User";
 import { Fragment } from "react";
 import Manage from "./Manage";
 import Manage2 from "./Manage2";
+import Manage3 from "./Manage3";
 
 const drawerWidth = 240;
 
@@ -208,6 +209,7 @@ export default function AdminInfo() {
               return <User />;
             } else {
               //   return <Manage />;
+              // return <Manage2 />;
               return <Manage2 />;
             }
           })()}

@@ -1,5 +1,3 @@
-import kenmotsu from "../assets/kenmotsu.JPG";
-
 export const data = [
   {
     id: "1",
@@ -15,7 +13,6 @@ export const data = [
       sad: 0.0000061242176343512256,
       surprised: 0.000015435425666510127,
     },
-    image: kenmotsu,
   },
   {
     id: "2",
@@ -31,12 +28,11 @@ export const data = [
       sad: 0.0000061242176343512256,
       surprised: 0.000015435425666510127,
     },
-    image: kenmotsu,
   },
   {
     id: "3",
     name: "剣持祥希",
-    mail: "kennmotsusyouki@cit.com",
+    mail: "kennmotusyouki@cit.com",
     point: "2",
     expression: {
       angry: 0.000011405189070501365,
@@ -47,6 +43,5 @@ export const data = [
       sad: 0.0000061242176343512256,
       surprised: 0.000015435425666510127,
     },
-    image: kenmotsu,
   },
 ];
