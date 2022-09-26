@@ -4,7 +4,6 @@ import { DataGrid } from "@mui/x-data-grid";
 import { Button } from "@material-ui/core";
 import { data } from "./childComponents/tableData2";
 import "./Manage2.css";
-import Face2 from "./Face2";
 import FaceGraph from "./childComponents/FaceGraph";
 
 export default function Manage2() {

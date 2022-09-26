@@ -208,8 +208,6 @@ export default function AdminInfo() {
             if (count == 1) {
               return <User />;
             } else {
-              //   return <Manage />;
-              // return <Manage2 />;
               return <Manage2 />;
             }
           })()}

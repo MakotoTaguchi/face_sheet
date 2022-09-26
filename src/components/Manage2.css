@@ -12,12 +12,34 @@
   height: auto;
 }
 
+.wrap {
+  margin-top: -50px;
+}
+
 .face-graph {
   display: flex;
-  text-align: center;
-  margin-left: 10%;
+  margin-left: 8%;
+  width: 100%;
 }
 
 .face-graph img {
-  height: 650px;
+  height: 600px;
+  width: auto;
+  margin-right: 100px;
+}
+
+.back {
+  z-index: 999;
+  position: absolute;
+  font-size: 18px;
+  width: 200px;
+  right: 10%;
+}
+
+.description {
+  margin-right: 100px;
+}
+
+.graph-description {
+  margin-top: -52px;
 }
