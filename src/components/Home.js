@@ -1,47 +1,39 @@
 import React, { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { 
-  collection,  
-  query, 
-  where, 
-  getDocs, 
-} from "firebase/firestore";
+import { collection, query, where, getDocs } from "firebase/firestore";
 
 import { auth, db } from "../firebase";
 import SignIn from "./SignIn";
-import User from "./Employee";
+import Employee from "./Employee";
 import Admin from "./Admin";
 
 function Home() {
   const [user] = useAuthState(auth);
-  const [role, setRole] = useState('');
+  const [role, setRole] = useState("");
 
   const judge = async () => {
-    const querySnapshot = await getDocs(query(collection(db, "users"), where("uid", "==", user.uid)));
+    const querySnapshot = await getDocs(
+      query(collection(db, "users"), where("uid", "==", user.uid))
+    );
     querySnapshot.forEach((doc) => {
       setRole(doc.data().role);
-  });
-  }
+    });
+  };
 
-  if(user) {
+  if (user) {
     judge();
-    if(role === 'admin'){
-      return(
+    if (role === "admin") {
+      return (
         <div>
           <Admin />
         </div>
       );
-    }else {
-      return(
-        < User />
-      )
+    } else {
+      return <Employee />;
     }
-  }else{
-    return(
-    <SignIn />
-    );
+  } else {
+    return <SignIn />;
   }
-
 }
 
 export default Home;

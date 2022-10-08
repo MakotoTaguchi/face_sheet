@@ -1,0 +1,56 @@
+.MuiButtonBase-root {
+  padding: 8px 20px !important;
+}
+
+.css-p55zm9-MuiButtonBase-root-MuiIconButton-root {
+  margin: 0 40px 0px -12px !important;
+}
+
+.css-de9k3v-MuiDataGrid-selectedRowCount {
+  visibility: hidden !important;
+  width: auto;
+  height: auto;
+}
+
+.wrap {
+  margin-top: -50px;
+}
+
+.face-graph {
+  display: flex;
+  margin-left: 8%;
+  width: 100%;
+}
+
+.face-graph img {
+  height: 600px;
+  width: auto;
+  margin-right: 100px;
+}
+
+.back {
+  z-index: 999;
+  position: absolute;
+  background-color: #1976d2;
+  border-radius: 10px;
+  padding: 8px;
+  width: 100px !important;
+  color: #fff;
+  cursor: pointer;
+}
+
+.back:hover {
+  opacity: 0.5;
+}
+
+.description {
+  margin-right: 100px;
+}
+
+.graph-description {
+  margin-top: -52px;
+}
+
+.css-189zzm0-MuiButtonBase-root-MuiIconButton-root {
+  display: none !important;
+}
