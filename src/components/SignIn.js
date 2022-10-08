@@ -29,9 +29,6 @@ const SignIn = () => {
         updateDB();
       }
     })
-    .catch((e) => {
-      alert(e.message);
-    });
   };
 
   // ドキュメント追加
@@ -40,7 +37,8 @@ const SignIn = () => {
       name: auth.currentUser.displayName,
       email: auth.currentUser.email,
       login: serverTimestamp(),
-      uid: auth.currentUser.uid,
+      role: "employee",
+      uid: auth.currentUser.uid
     });
   }
 

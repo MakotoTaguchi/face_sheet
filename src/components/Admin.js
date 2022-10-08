@@ -1,8 +1,15 @@
 import React from "react";
 
+import SignOut from "./SignOut";
+import UserInfo from "./UserInfo";
+
 const Admin = () => {
   return (
-    <div>管理者</div>
+    <div>
+      <h1>管理者</h1>
+      <UserInfo />
+      <SignOut />
+    </div>
   );
 }
 
