@@ -67,6 +67,7 @@ const SignIn = () => {
       name: auth.currentUser.displayName,
       email: auth.currentUser.email,
       login: serverTimestamp(),
+      point: 0,
       role: "employee",
       uid: auth.currentUser.uid,
     });

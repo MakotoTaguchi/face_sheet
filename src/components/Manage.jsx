@@ -4,10 +4,27 @@ import { DataGrid } from "@mui/x-data-grid";
 import { Button } from "@material-ui/core";
 import { data } from "./assets/tableData";
 import FaceGraph from "./FaceGraph";
+import {
+  collection,
+  getDocs
+} from "firebase/firestore"
+
+import { db } from "../firebase";
 import "./css/Manage.css";
 
-export default function Manage() {
+const Manage = () => {
   const [count, setCount] = useState();
+
+  const takeDB = async () => {
+    const Snapshot = await getDocs(collection(db, "users"));
+    Snapshot.forEach((doc) => {
+      const info = doc.data();
+      console.log(info);
+    });
+  }
+
+  takeDB();
+
   const columns = [
     {
       field: "infoBtn",
@@ -21,24 +38,25 @@ export default function Manage() {
           color="primary"
           onClick={() => {
             setCount(params.id);
-            console.log(data[params.id - 1].name);
-            console.log(count);
+            // console.log(data[params.id - 1].name);
+            // console.log(count);
           }}
         >
           詳細
         </Button>
       ),
     },
-    { field: "id", headerName: "ID", width: 100 },
+    // { field: "id", headerName: "ID", width: 100 },
     { field: "name", headerName: "名前", width: 130 },
     { field: "mail", headerName: "メールアドレス", width: 250 },
     { field: "point", headerName: "笑みポイント", width: 130 },
   ];
 
+
   return (
     <div>
       {(() => {
-        if (count != undefined) {
+        if (count !== undefined) {
           return <FaceGraph props={count} />;
         } else {
           return (
@@ -56,3 +74,4 @@ export default function Manage() {
     </div>
   );
 }
+export default Manage;

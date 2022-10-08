@@ -13,7 +13,7 @@ function FaceGraph(props) {
   return (
     <div>
       {(() => {
-        if (num == 1) {
+        if (num === 1) {
           return <Manage />;
         } else {
           return (

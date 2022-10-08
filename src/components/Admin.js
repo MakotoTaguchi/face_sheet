@@ -205,7 +205,7 @@ const Admin = () => {
         </Drawer>
         <Box className="main" component="main" sx={{ flexGrow: 1, p: 3 }}>
           {(() => {
-            if (count == 1) {
+            if (count === 1) {
               return <UserInfo />;
             } else {
               return <Manage />;
