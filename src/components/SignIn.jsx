@@ -65,7 +65,6 @@ const SignIn = () => {
   const addDB = async () => {
     await addDoc(collection(db, "users"), {
       name: auth.currentUser.displayName,
-      id: 0,
       email: auth.currentUser.email,
       login: serverTimestamp(),
       point: 0,

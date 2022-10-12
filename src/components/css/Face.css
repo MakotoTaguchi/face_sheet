@@ -1,0 +1,89 @@
+canvas {
+  position: absolute;
+}
+
+.newPostCard {
+  /* height: 100vh; */
+  margin-top: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.addPost {
+  display: flex;
+  flex-flow: column;
+}
+
+label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.postForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.postInput {
+  height: 30px;
+  border: none;
+  margin-bottom: 10px;
+}
+
+.container {
+  height: calc(100vh-50px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 50px;
+  gap: 100px;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rightInput {
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.rightButton {
+  padding: 10px 20px;
+  font-weight: bold;
+}
+
+.pushImage {
+  /* zoom: 0.2; */
+  height: 600px;
+}
+
+.submit {
+  border: 1px solid #333;
+  border-radius: 30px;
+  padding: 10px 60px;
+}
+
+.submit:hover {
+  background-color: #333;
+  color: #fff;
+}
+
+.avater {
+  width: 90px;
+  display: block;
+  margin: 0 auto;
+}
+
+.reset {
+  width: 300px;
+  display: block;
+  margin: 0 auto;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
