@@ -6,30 +6,49 @@ import { auth, db } from "../firebase";
 import SignIn from "./SignIn";
 import Employee from "./Employee";
 import Admin from "./Admin";
+import Modal from "./Modal";
 
 function Home() {
   const [user] = useAuthState(auth);
   const [role, setRole] = useState("");
+  const [id, setId] = useState();
 
   const judge = async () => {
     const querySnapshot = await getDocs(
-      query(collection(db, "users"), where("uid", "==", user.uid))
-    );
+      query(collection(db, "users"), where("uid", "==", user.uid)));
     querySnapshot.forEach((doc) => {
       setRole(doc.data().role);
+      setId(doc.data().id);
     });
   };
-
   if (user) {
     judge();
     if (role === "admin") {
       return (
         <div>
           <Admin />
+          {
+          (() => {
+            if(id === 0 || isNaN(id)){
+              return < Modal />;
+            } 
+          })()
+        }
         </div>
       );
     } else {
-      return <Employee />;
+      return (
+      <div>
+        <Employee />
+        {
+          (() => {
+            if(id === 0 || isNaN(id)){
+              return < Modal />;
+            } 
+          })()
+        }
+      </div>
+      );
     }
   } else {
     return <SignIn />;

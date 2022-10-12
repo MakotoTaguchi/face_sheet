@@ -65,6 +65,7 @@ const SignIn = () => {
   const addDB = async () => {
     await addDoc(collection(db, "users"), {
       name: auth.currentUser.displayName,
+      id: 0,
       email: auth.currentUser.email,
       login: serverTimestamp(),
       point: 0,
@@ -124,8 +125,7 @@ const SignIn = () => {
             <Box component="form" noValidate sx={{ mt: 1 }}>
               <GoogleButton
                 className="firstButton Button"
-                type="submit"
-                fullWidth
+                type="light"
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
                 onClick={signInWithGoogle}
