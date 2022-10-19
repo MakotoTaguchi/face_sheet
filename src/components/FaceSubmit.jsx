@@ -26,21 +26,23 @@ function FaceSubmit() {
   return (
     <div>
       {image ? (
-        <FaceExpression image={image} />
+        <FaceExpression image={image} file={file}/>
       ) : (
         <div className="newPostCard">
           <div className="addPost">
-            <img className="avater" src={Smile} />
+            <img className="avater" src={Smile} alt="smileavatar" />
             <div className="postForm">
               <label htmlFor="file">
                 <p className="submit">写真提出</p>
               </label>
               <input
-                onChange={(e) => setFile(e.target.files[0])}
+                onChange={(e) => {
+                  setFile(e.target.files[0])
+                }}
                 id="file"
                 style={{ display: "none" }}
                 type="file"
-                onClick={(e) => console.log("a")}
+                accept=".png, .jpeg, .jpg"
               />
             </div>
           </div>

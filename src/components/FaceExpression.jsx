@@ -1,19 +1,34 @@
 import React, { Fragment, useEffect, useRef, useState } from "react";
 import * as faceapi from "face-api.js";
 import FaceSubmit from "./FaceSubmit";
+import {
+  collection,
+  addDoc,
+  query,
+  where,
+  getDocs,
+  updateDoc,
+  doc,
+  getDoc,
+} from "firebase/firestore";
+import { auth, db, storage } from "../firebase";
+import { ref, uploadBytesResumable } from "firebase/storage";
 
-function FaceExpression({ image }) {
+function FaceExpression({ image , file}) {
   const { url } = image;
   const imgRef = useRef();
   const [object, setObject] = useState([{}]);
   const [num, setNum] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [isUploaded, setIsUploaded] = useState(false);
+  const date1 = new Date();
+  const m = date1.getMonth()+1
+  const d = date1.getFullYear() + "年" + m + "月" + date1.getDate() + "日";
 
   const handleImage = async () => {
     const detections = await faceapi
       .detectAllFaces(imgRef.current, new faceapi.TinyFaceDetectorOptions())
       .withFaceExpressions();
-
-    const date1 = new Date();
 
     if (detections[0].expressions.happy >= 0.9) {
       setObject({
@@ -28,7 +43,6 @@ function FaceExpression({ image }) {
         },
         point: 3,
         img: url,
-        date: date1,
       });
     } else if (detections[0].expressions.happy >= 0.8) {
       setObject({
@@ -43,7 +57,6 @@ function FaceExpression({ image }) {
         },
         point: 2,
         img: url,
-        date: date1,
       });
     } else if (detections[0].expressions.happy >= 0.5) {
       setObject({
@@ -58,7 +71,6 @@ function FaceExpression({ image }) {
         },
         point: 1,
         img: url,
-        date: date1,
       });
     } else {
       setObject({
@@ -73,7 +85,6 @@ function FaceExpression({ image }) {
         },
         point: 0,
         img: url,
-        date: date1,
       });
     }
   };
@@ -96,9 +107,51 @@ function FaceExpression({ image }) {
     setNum(num + 1);
   };
 
-  const Submit = () => {
-    console.log(object);
+  const Submit = async () => {
+    await addDoc(collection(db, "expressions"), {
+      date: d,
+      angry: object.expressions.angry,
+      disgusted: object.expressions.disgusted,
+      fearful: object.expressions.fearful,
+      happy: object.expressions.happy,
+      neutral: object.expressions.neutral,
+      sad: object.expressions.sad,
+      surprised: object.expressions.surprised,
+      uid: auth.currentUser.uid,
+      img: object.img,
+    });
+
+    const querySnapshot = await getDocs(query(collection(db, "users"), where("uid", "==", auth.currentUser.uid)));
+    const docId = querySnapshot.docs.map((doc) => doc.id).toString();
+    const getRef = await getDoc(doc(db, "users", docId));
+    const point = getRef.data().point + object.point;
+
+    await updateDoc(doc(db, "users", docId), {
+      point: point,
+    });
   };
+
+  const OnFileUploadToFirebase = async() => {
+    const querySnapshot = await getDocs(query(collection(db, "users"), where("uid", "==", auth.currentUser.uid)));
+    const docId = querySnapshot.docs.map((doc) => doc.id).toString();
+    const getRef = await getDoc(doc(db, "users", docId));
+    const storageRef = ref(storage, "image/" + getRef.data().id + "/" + d + "." + file.name.split('.').pop());
+    const uploadImage = uploadBytesResumable(storageRef, file)
+
+    uploadImage.on(
+      "state_changed",
+      (snapshot) => {
+        setLoading(true);
+      },
+      (err) => {
+        console.log(err);
+      },
+      () => {
+        setLoading(false);
+        setIsUploaded(true);
+      }
+    )
+  }
 
   return (
     <Fragment>
@@ -133,7 +186,11 @@ function FaceExpression({ image }) {
                     <p className="submit reset" onClick={Reset}>
                       選び直す
                     </p>
-                    <p className="submit reset" onClick={Submit}>
+                    <p className="submit reset" 
+                      onClick={() => {
+                        Submit()
+                        OnFileUploadToFirebase()
+                    }}>
                       提出
                     </p>
                   </div>
