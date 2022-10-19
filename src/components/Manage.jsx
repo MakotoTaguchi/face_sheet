@@ -8,10 +8,13 @@ import { collection, onSnapshot } from "firebase/firestore";
 import { db } from "../firebase";
 import "./css/Manage.css";
 import { useEffect } from "react";
+import Edit from "./Edit";
 
 const Manage = () => {
   const [count, setCount] = useState();
+  const [num, setNum] = useState();
   const [datas, setDatas] = useState([]);
+  const [object, setObject] = useState({});
 
   useEffect(() => {
     const Snapshot = collection(db, "users");
@@ -20,20 +23,32 @@ const Manage = () => {
     });
   }, []);
 
-  // useEffect(() => {
-  //   if (datas.length >= 1) {
-  //     for (let i = 0; i < datas.length; i++) {
-  //       const obj = datas[i];
-  //       obj.id = i + 1;
-  //       console.log(obj);
-  //       setTest((prevState) => [...prevState, obj]);
-  //     }
-  //   }
-  // }, [datas]);
-
-  // console.log(test);
-
   const columns = [
+    {
+      field: "EditBtn",
+      headerName: "編集",
+      sortable: false,
+      width: 120,
+      disableClickEventBubbling: true,
+      renderCell: (params) => (
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={() => {
+            setCount(params.id);
+            setNum(1);
+            for (let i = 0; i < datas.length; i++) {
+              if (datas[i].id === params.id) {
+                setObject(datas[i]);
+                break;
+              }
+            }
+          }}
+        >
+          編集
+        </Button>
+      ),
+    },
     {
       field: "infoBtn",
       headerName: "詳細",
@@ -46,6 +61,7 @@ const Manage = () => {
           color="primary"
           onClick={() => {
             setCount(params.id);
+            setNum(2);
           }}
         >
           詳細
@@ -61,7 +77,9 @@ const Manage = () => {
   return (
     <div>
       {(() => {
-        if (count !== undefined) {
+        if (num === 1) {
+          return <Edit object={object} data={datas} count={count} />;
+        } else if (num === 2) {
           return <FaceGraph props={count} />;
         } else {
           return (
