@@ -1,0 +1,9 @@
+.ChatSpace {
+  background-color: #faf6f9;
+  height: 500px;
+}
+
+.Chat {
+  display: block;
+  margin: 0 auto;
+}

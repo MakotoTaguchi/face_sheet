@@ -18,11 +18,13 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import PersonIcon from "@mui/icons-material/Person";
 import TagFacesIcon from "@mui/icons-material/TagFaces";
+import ChatIcon from "@mui/icons-material/Chat";
 import { Fragment } from "react";
 
 import "./css/Admin.css";
 import Manage from "./Manage";
 import UserInfo from "./UserInfo";
+import ChatSpace from "./ChatSpace";
 
 const drawerWidth = 240;
 
@@ -110,6 +112,10 @@ const Admin = () => {
 
   const linkSwitch2 = () => {
     setCount(2);
+  };
+
+  const linkSwitch3 = () => {
+    setCount(3);
   };
 
   return (
@@ -200,6 +206,31 @@ const Admin = () => {
                 />
               </ListItemButton>
             </ListItem>
+            <ListItem key={"チャット"} disablePadding sx={{ display: "block" }}>
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                }}
+                type="button"
+                onClick={linkSwitch3}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <ChatIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primary={"社員管理"}
+                  sx={{ opacity: open ? 1 : 0 }}
+                />
+              </ListItemButton>
+            </ListItem>
           </List>
           <Divider />
         </Drawer>
@@ -207,8 +238,10 @@ const Admin = () => {
           {(() => {
             if (count === 1) {
               return <UserInfo />;
-            } else {
+            } else if (count === 2) {
               return <Manage />;
+            } else {
+              return <ChatSpace />;
             }
           })()}
         </Box>

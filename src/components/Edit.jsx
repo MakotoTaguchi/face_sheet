@@ -39,24 +39,34 @@ function Edit(props) {
       role: data.get("role"),
     });
 
+    const id = Number(data.get("id"));
+    const find = props.data.find((data) => data.id === id);
 
-    // db変更
-    const querySnapshot = await getDocs(
-      query(collection(db, "users"), where("id", "==", props.count))
-    );
-    const docId = querySnapshot.docs.map((doc) => doc.id).toString();
-
-    await updateDoc(doc(db, "users", docId), {
-      id: Number(data.get("id")),
-      name: data.get("name"),
-      email: data.get("email"),
-      point: Number(data.get("point")),
-      role: data.get("role"),
-    });
+    if (find == data[id]) {
+      setNum(2);
+      // db追加
+      const querySnapshot = await getDocs(
+        query(collection(db, "users"), where("id", "==", props.count))
+      );
+      const docId = querySnapshot.docs.map((doc) => doc.id).toString();
+      await updateDoc(doc(db, "users", docId), {
+        id: Number(data.get("id")),
+        name: data.get("name"),
+        email: data.get("email"),
+        point: Number(data.get("point")),
+        role: data.get("role"),
+      });
+    } else {
+      setNum(3);
+    }
   };
 
   const Back = () => {
     setNum(1);
+  };
+
+  const Back2 = () => {
+    setNum(0);
   };
 
   return (
@@ -64,6 +74,28 @@ function Edit(props) {
       {(() => {
         if (num === 1) {
           return <Manage />;
+        } else if (num === 2) {
+          return (
+            <div>
+              <ArrowBackRoundedIcon
+                sx={{ fontSize: 60 }}
+                className="back"
+                onClick={Back}
+              />
+              <p>変更が完了しました！</p>
+            </div>
+          );
+        } else if (num === 3) {
+          return (
+            <div>
+              <ArrowBackRoundedIcon
+                sx={{ fontSize: 60 }}
+                className="back"
+                onClick={Back2}
+              />
+              <p>idが被っています</p>
+            </div>
+          );
         } else {
           return (
             <div className="Edit">
