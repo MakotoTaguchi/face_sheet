@@ -10,7 +10,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { auth, db } from "../firebase";
+import { db } from "../firebase";
 import {
   collection,
   query,
@@ -18,7 +18,6 @@ import {
   getDocs,
   updateDoc,
   doc,
-  getDoc,
 } from "firebase/firestore";
 import { useState } from "react";
 
@@ -34,18 +33,18 @@ function Edit(props) {
     const data = new FormData(event.currentTarget);
     console.log({
       id: data.get("id"),
-      role: data.get("role"),
       name: data.get("name"),
       email: data.get("email"),
       point: data.get("point"),
+      role: data.get("role"),
     });
 
-    // db追加
+
+    // db変更
     const querySnapshot = await getDocs(
       query(collection(db, "users"), where("id", "==", props.count))
     );
     const docId = querySnapshot.docs.map((doc) => doc.id).toString();
-    const getRef = await getDoc(doc(db, "users", docId));
 
     await updateDoc(doc(db, "users", docId), {
       id: Number(data.get("id")),

@@ -80,7 +80,7 @@ const Manage = () => {
         if (num === 1) {
           return <Edit object={object} data={datas} count={count} />;
         } else if (num === 2) {
-          return <FaceGraph props={count} />;
+          return <FaceGraph count={count} />;
         } else {
           return (
             <div style={{ height: 400, width: "100%" }}>

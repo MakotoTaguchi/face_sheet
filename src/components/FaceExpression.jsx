@@ -108,6 +108,10 @@ function FaceExpression({ image , file}) {
   };
 
   const Submit = async () => {
+    const querySnapshot = await getDocs(query(collection(db, "users"), where("uid", "==", auth.currentUser.uid)));
+    const docId = querySnapshot.docs.map((doc) => doc.id).toString();
+    const getRef = await getDoc(doc(db, "users", docId));
+
     await addDoc(collection(db, "expressions"), {
       date: d,
       angry: object.expressions.angry,
@@ -117,15 +121,11 @@ function FaceExpression({ image , file}) {
       neutral: object.expressions.neutral,
       sad: object.expressions.sad,
       surprised: object.expressions.surprised,
-      uid: auth.currentUser.uid,
+      id: getRef.data().id,
       img: object.img,
     });
 
-    const querySnapshot = await getDocs(query(collection(db, "users"), where("uid", "==", auth.currentUser.uid)));
-    const docId = querySnapshot.docs.map((doc) => doc.id).toString();
-    const getRef = await getDoc(doc(db, "users", docId));
     const point = getRef.data().point + object.point;
-
     await updateDoc(doc(db, "users", docId), {
       point: point,
     });
