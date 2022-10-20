@@ -21,13 +21,14 @@ const FaceGraph = async (props) => {
   const [num, setNum] = useState();
   const facedata = [];
   
-  const querySnapshot = await getDocs(
-    query(collection(db, "expressions"), where("id", "==", props.count), where("date", "==", d)));
-    querySnapshot.forEach((doc) => {
-      facedata.push(doc.data());
+  useEffect(() => {
+    const q = query(collection(db, "expressions"), where("id", "==", props.count), where("date", "==", d));
+    onSnapshot(q, (expression) => {
+      expression.forEach((doc) => {
+        setFacedata(doc.data());
+      });
     });
-
-    console.log(facedata[0].angry);
+  },[d, props.count]);
     
     const Back = () => {
       setNum(1);
@@ -60,7 +61,7 @@ const FaceGraph = async (props) => {
                         data={[
                           {
                             x: "angry",
-                            y: facedata[0].angry,
+                            y: Number(facedata.angry),
                           },
                         ]}
                       />
@@ -68,7 +69,7 @@ const FaceGraph = async (props) => {
                         data={[
                           {
                             x: "disguest",
-                            y: facedata[0].disguest,
+                            y: Number(facedata.disguest),
                           },
                         ]}
                       />
