@@ -1,47 +1,44 @@
-import React, { 
-  useEffect,
-  useState,
-} from "react";
+import React, { useEffect, useState } from "react";
 import { VictoryChart, VictoryGroup, VictoryBar } from "victory";
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
-import {
-  collection,
-  query,
-  where,
-  getDocs,
-} from "firebase/firestore";
+import { collection, query, where, onSnapshot } from "firebase/firestore";
 
 import Manage from "./Manage";
 import { db } from "../firebase";
 
-const FaceGraph = async (props) => {
+const FaceGraph = (props) => {
   const date1 = new Date();
-  const m = date1.getMonth()+1
+  const m = date1.getMonth() + 1;
   const d = date1.getFullYear() + "年" + m + "月" + date1.getDate() + "日";
   const [num, setNum] = useState();
-  const facedata = [];
-  
+  const [facedata, setFacedata] = useState([{}]);
+
   useEffect(() => {
-    const q = query(collection(db, "expressions"), where("id", "==", props.count), where("date", "==", d));
+    const q = query(
+      collection(db, "expressions"),
+      where("id", "==", props.count),
+      where("date", "==", d)
+    );
     onSnapshot(q, (expression) => {
       expression.forEach((doc) => {
         setFacedata(doc.data());
       });
     });
-  },[d, props.count]);
-    
-    const Back = () => {
-      setNum(1);
-    };
-    
+  }, [d, props.count]);
+
+  const Back = () => {
+    setNum(1);
+  };
+
+  console.log(facedata);
+  console.log(facedata.length);
+
   return (
     <div>
-      { (() => {
+      {(() => {
         if (num === 1) {
-          return (
-          <Manage />
-          );
-        }else {
+          return <Manage />;
+        } else {
           return (
             <div className="wrap">
               <ArrowBackRoundedIcon
@@ -54,69 +51,79 @@ const FaceGraph = async (props) => {
                   {/* <img src={} /> */}
                   <p className="description">今日の画像</p>
                 </div>
-                <div className="graph-area">
-                  <VictoryChart height={500} width={550} domainPadding={20}>
-                    <VictoryGroup colorScale={"qualitative"}>
-                      <VictoryBar
-                        data={[
-                          {
-                            x: "angry",
-                            y: Number(facedata.angry),
-                          },
-                        ]}
-                      />
-                      <VictoryBar
-                        data={[
-                          {
-                            x: "disguest",
-                            y: Number(facedata.disguest),
-                          },
-                        ]}
-                      />
-                      <VictoryBar
-                        data={[
-                          {
-                            x: "fearful",
-                            y: facedata[0].fearful,
-                          },
-                        ]}
-                      />
-                      <VictoryBar
-                        data={[
-                          {
-                            x: "happy",
-                            y: facedata[0].happy,
-                          },
-                        ]}
-                      />
-                      <VictoryBar
-                        data={[
-                          {
-                            x: "neutral",
-                            y: facedata[0].neutral,
-                          },
-                        ]}
-                      />
-                      <VictoryBar
-                        data={[
-                          { 
-                            x: "sad", 
-                            y: facedata[0].sad, 
-                          },
-                        ]}
-                      />
-                      <VictoryBar
-                        data={[
-                          {
-                            x: "surprised",
-                            y: facedata[0].suprised,
-                          },
-                        ]}
-                      />
-                    </VictoryGroup>
-                  </VictoryChart>
-                  <p className="graph-description">表情分析グラフ</p>
-                </div>
+                {(() => {
+                  if (facedata.length === undefined) {
+                    return (
+                      <div className="graph-area">
+                        <VictoryChart
+                          height={500}
+                          width={550}
+                          domainPadding={20}
+                        >
+                          <VictoryGroup colorScale={"qualitative"}>
+                            <VictoryBar
+                              data={[
+                                {
+                                  x: "angry",
+                                  y: facedata.angry,
+                                },
+                              ]}
+                            />
+                            <VictoryBar
+                              data={[
+                                {
+                                  x: "disguest",
+                                  y: facedata.disgusted,
+                                },
+                              ]}
+                            />
+                            <VictoryBar
+                              data={[
+                                {
+                                  x: "fearful",
+                                  y: facedata.fearful,
+                                },
+                              ]}
+                            />
+                            <VictoryBar
+                              data={[
+                                {
+                                  x: "happy",
+                                  y: facedata.happy,
+                                },
+                              ]}
+                            />
+                            <VictoryBar
+                              data={[
+                                {
+                                  x: "neutral",
+                                  y: facedata.neutral,
+                                },
+                              ]}
+                            />
+                            <VictoryBar
+                              data={[
+                                {
+                                  x: "sad",
+                                  y: facedata.sad,
+                                },
+                              ]}
+                            />
+                            <VictoryBar
+                              data={[
+                                {
+                                  x: "surprised",
+                                  y: facedata.surprised,
+                                },
+                              ]}
+                            />
+                          </VictoryGroup>
+                        </VictoryChart>
+                        <p className="graph-description">表情分析グラフ</p>
+                      </div>
+                    );
+                  }
+                })()}
               </div>
             </div>
           );
@@ -124,6 +131,6 @@ const FaceGraph = async (props) => {
       })()}
     </div>
   );
-}
+};
 
 export default FaceGraph;
