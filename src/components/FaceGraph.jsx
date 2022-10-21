@@ -2,17 +2,19 @@ import React, { useEffect, useState } from "react";
 import { VictoryChart, VictoryGroup, VictoryBar } from "victory";
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import { collection, query, where, onSnapshot } from "firebase/firestore";
+import { ref, getDownloadURL } from "firebase/storage";
 
 import Manage from "./Manage";
-import { db } from "../firebase";
+import { db, storage } from "../firebase";
 
 const FaceGraph = (props) => {
   const date1 = new Date();
   const m = date1.getMonth() + 1;
   const d = date1.getFullYear() + "年" + m + "月" + date1.getDate() + "日";
   const [num, setNum] = useState();
+  const [url, setUrl] = useState();
   const [facedata, setFacedata] = useState([{}]);
-
+  
   useEffect(() => {
     const q = query(
       collection(db, "expressions"),
@@ -24,14 +26,14 @@ const FaceGraph = (props) => {
         setFacedata(doc.data());
       });
     });
+    getDownloadURL(ref(storage, "image/" + props.count + "/" + d + ".jpeg")).then((url) => {
+      setUrl(url);
+    });
   }, [d, props.count]);
 
   const Back = () => {
     setNum(1);
   };
-
-  console.log(facedata);
-  console.log(facedata.length);
 
   return (
     <div>
@@ -48,7 +50,7 @@ const FaceGraph = (props) => {
               />
               <div className="face-graph">
                 <div className="image-area">
-                  {/* <img src={} /> */}
+                  <img src={url} />
                   <p className="description">今日の画像</p>
                 </div>
                 {(() => {

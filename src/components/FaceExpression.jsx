@@ -135,7 +135,7 @@ function FaceExpression({ image , file}) {
     const querySnapshot = await getDocs(query(collection(db, "users"), where("uid", "==", auth.currentUser.uid)));
     const docId = querySnapshot.docs.map((doc) => doc.id).toString();
     const getRef = await getDoc(doc(db, "users", docId));
-    const storageRef = ref(storage, "image/" + getRef.data().id + "/" + d + "." + file.name.split('.').pop());
+    const storageRef = ref(storage, "image/" + getRef.data().id + "/" + d + ".jpeg");
     const uploadImage = uploadBytesResumable(storageRef, file)
 
     uploadImage.on(

@@ -42,7 +42,7 @@ function FaceSubmit() {
                 id="file"
                 style={{ display: "none" }}
                 type="file"
-                accept=".png, .jpeg, .jpg"
+                accept=".jpg, .png, .jpeg"
               />
             </div>
           </div>
