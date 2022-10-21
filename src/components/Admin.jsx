@@ -226,7 +226,7 @@ const Admin = () => {
                   <ChatIcon />
                 </ListItemIcon>
                 <ListItemText
-                  primary={"社員管理"}
+                  primary={"チャット"}
                   sx={{ opacity: open ? 1 : 0 }}
                 />
               </ListItemButton>
