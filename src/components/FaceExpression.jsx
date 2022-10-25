@@ -14,15 +14,15 @@ import {
 import { auth, db, storage } from "../firebase";
 import { ref, uploadBytesResumable } from "firebase/storage";
 
-function FaceExpression({ image , file}) {
+function FaceExpression({ image, file }) {
   const { url } = image;
   const imgRef = useRef();
   const [object, setObject] = useState([{}]);
-  const [num, setNum] = useState(1);
+  const [num, setNum] = useState();
   const [loading, setLoading] = useState(false);
   const [isUploaded, setIsUploaded] = useState(false);
   const date1 = new Date();
-  const m = date1.getMonth()+1
+  const m = date1.getMonth() + 1;
   const d = date1.getFullYear() + "年" + m + "月" + date1.getDate() + "日";
 
   const handleImage = async () => {
@@ -104,11 +104,13 @@ function FaceExpression({ image , file}) {
   }, []);
 
   const Reset = () => {
-    setNum(num + 1);
+    setNum(1);
   };
 
   const Submit = async () => {
-    const querySnapshot = await getDocs(query(collection(db, "users"), where("uid", "==", auth.currentUser.uid)));
+    const querySnapshot = await getDocs(
+      query(collection(db, "users"), where("uid", "==", auth.currentUser.uid))
+    );
     const docId = querySnapshot.docs.map((doc) => doc.id).toString();
     const getRef = await getDoc(doc(db, "users", docId));
 
@@ -129,14 +131,21 @@ function FaceExpression({ image , file}) {
     await updateDoc(doc(db, "users", docId), {
       point: point,
     });
+
+    setNum(2);
   };
 
-  const OnFileUploadToFirebase = async() => {
-    const querySnapshot = await getDocs(query(collection(db, "users"), where("uid", "==", auth.currentUser.uid)));
+  const OnFileUploadToFirebase = async () => {
+    const querySnapshot = await getDocs(
+      query(collection(db, "users"), where("uid", "==", auth.currentUser.uid))
+    );
     const docId = querySnapshot.docs.map((doc) => doc.id).toString();
     const getRef = await getDoc(doc(db, "users", docId));
-    const storageRef = ref(storage, "image/" + getRef.data().id + "/" + d + ".jpeg");
-    const uploadImage = uploadBytesResumable(storageRef, file)
+    const storageRef = ref(
+      storage,
+      "image/" + getRef.data().id + "/" + d + ".jpeg"
+    );
+    const uploadImage = uploadBytesResumable(storageRef, file);
 
     uploadImage.on(
       "state_changed",
@@ -150,12 +159,83 @@ function FaceExpression({ image , file}) {
         setLoading(false);
         setIsUploaded(true);
       }
-    )
-  }
+    );
+  };
 
   return (
     <Fragment>
-      {num >= 2 ? (
+      {(() => {
+        if (num === 1) {
+          return <FaceSubmit />;
+        } else if (num === 2) {
+          return (
+            <div>
+              {(() => {
+                if (loading === true) {
+                  return (
+                    <div>
+                      <p>画像をアップロード中です</p>
+                    </div>
+                  );
+                } else if (loading === false && isUploaded === true) {
+                  return (
+                    <div>
+                      <p>アップロードが終わりました</p>
+                    </div>
+                  );
+                }
+              })()}
+            </div>
+          );
+        } else {
+          return (
+            <div className="container">
+              <div className="left">
+                <img
+                  className="pushImage"
+                  ref={imgRef}
+                  crossOrigin="anonymous"
+                  src={url}
+                  alt=""
+                />
+              </div>
+              <div className="right">
+                {(() => {
+                  if (object.length !== undefined) {
+                    return (
+                      <div>
+                        <p>顔認識できません。</p>
+                        <p className="submit reset" onClick={Reset}>
+                          やり直す
+                        </p>
+                      </div>
+                    );
+                  } else {
+                    return (
+                      <div>
+                        <p>顔認識成功</p>
+                        <p className="submit reset" onClick={Reset}>
+                          選び直す
+                        </p>
+                        <p
+                          className="submit reset"
+                          onClick={() => {
+                            Submit();
+                            OnFileUploadToFirebase();
+                          }}
+                        >
+                          提出
+                        </p>
+                      </div>
+                    );
+                  }
+                })()}
+              </div>
+            </div>
+          );
+        }
+      })()}
+      {/* {num === 1 ? (
         <FaceSubmit />
       ) : (
         <div className="container">
@@ -186,11 +266,13 @@ function FaceExpression({ image , file}) {
                     <p className="submit reset" onClick={Reset}>
                       選び直す
                     </p>
-                    <p className="submit reset" 
+                    <p
+                      className="submit reset"
                       onClick={() => {
-                        Submit()
-                        OnFileUploadToFirebase()
-                    }}>
+                        Submit();
+                        OnFileUploadToFirebase();
+                      }}
+                    >
                       提出
                     </p>
                   </div>
@@ -199,7 +281,7 @@ function FaceExpression({ image , file}) {
             })()}
           </div>
         </div>
-      )}
+      )} */}
     </Fragment>
   );
 }
