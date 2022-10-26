@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import "./css/Face.css";
+import "../css/Face.css";
 import FaceExpression from "./FaceExpression";
-import Smile from "./assets/smile.png";
+import Smile from "../assets/smile.png";
 
 function FaceSubmit() {
   const [file, setFile] = useState();
@@ -26,7 +26,7 @@ function FaceSubmit() {
   return (
     <div>
       {image ? (
-        <FaceExpression image={image} file={file}/>
+        <FaceExpression image={image} file={file} />
       ) : (
         <div className="newPostCard">
           <div className="addPost">
@@ -37,7 +37,7 @@ function FaceSubmit() {
               </label>
               <input
                 onChange={(e) => {
-                  setFile(e.target.files[0])
+                  setFile(e.target.files[0]);
                 }}
                 id="file"
                 style={{ display: "none" }}

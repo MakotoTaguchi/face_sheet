@@ -5,8 +5,8 @@ import { Button } from "@material-ui/core";
 import FaceGraph from "./FaceGraph";
 import { collection, onSnapshot } from "firebase/firestore";
 
-import { db } from "../firebase";
-import "./css/Manage.css";
+import { db } from "../../firebase";
+import "../css/Manage.css";
 import { useEffect } from "react";
 import Edit from "./Edit";
 

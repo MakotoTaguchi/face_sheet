@@ -11,7 +11,7 @@ import {
   doc,
   getDoc,
 } from "firebase/firestore";
-import { auth, db, storage } from "../firebase";
+import { auth, db, storage } from "../../firebase";
 import { ref, uploadBytesResumable } from "firebase/storage";
 
 function FaceExpression({ image, file }) {

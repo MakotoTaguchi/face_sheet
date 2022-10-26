@@ -4,8 +4,8 @@ import { collection, query, where, getDocs } from "firebase/firestore";
 
 import { auth, db } from "../firebase";
 import SignIn from "./SignIn";
-import Employee from "./Employee";
-import Admin from "./Admin";
+import Employee from "./Employee/Employee";
+import Admin from "./Admin/Admin";
 import Modal from "./Modal";
 
 function Home() {
@@ -24,34 +24,47 @@ function Home() {
   };
   if (user) {
     judge();
-    if (role === "admin") {
-      return (
-        <div>
-          {(() => {
-            if (id === 0 || isNaN(id)) {
-              return <Modal />;
-            } else {
-              return <Admin />;
-            }
-          })()}
-        </div>
-      );
+    if (id === 0 || isNaN(id)) {
+      return <Modal />;
     } else {
-      return (
-        <div>
-          {(() => {
-            if (id === 0 || isNaN(id)) {
-              return <Modal />;
-            } else {
-              return <Employee />;
-            }
-          })()}
-        </div>
-      );
+      if (role === "admin") {
+        return <Admin />;
+      } else {
+        return <Employee />;
+      }
     }
   } else {
     return <SignIn />;
   }
+
+  //   if (role === "admin") {
+  //     return (
+  //       <div>
+  //         {(() => {
+  //           if (id === 0 || isNaN(id)) {
+  //             return <Modal />;
+  //           } else {
+  //             return <Admin />;
+  //           }
+  //         })()}
+  //       </div>
+  //     );
+  //   } else {
+  //     return (
+  //       <div>
+  //         {(() => {
+  //           if (id === 0 || isNaN(id)) {
+  //             return <Modal />;
+  //           } else {
+  //             return <Employee />;
+  //           }
+  //         })()}
+  //       </div>
+  //     );
+  //   }
+  // } else {
+  //   return <SignIn />;
+  // }
 }
 
 export default Home;

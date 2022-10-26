@@ -10,7 +10,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { db } from "../firebase";
+import { db } from "../../firebase";
 import {
   collection,
   query,
@@ -21,7 +21,7 @@ import {
 } from "firebase/firestore";
 import { useState } from "react";
 
-import "./css/Edit.css";
+import "../css/Edit.css";
 import Manage from "./Manage";
 
 const theme = createTheme();

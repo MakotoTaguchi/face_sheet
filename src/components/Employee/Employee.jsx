@@ -18,13 +18,10 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import PersonIcon from "@mui/icons-material/Person";
 import TagFacesIcon from "@mui/icons-material/TagFaces";
-import ChatIcon from "@mui/icons-material/Chat";
 import { Fragment } from "react";
 
-import "./css/Admin.css";
-import Manage from "./Manage";
-import UserInfo from "./UserInfo";
-import ChatSpace from "./ChatSpace";
+import UserInfo from "../UserInfo";
+import FaceSubmit from "./FaceSubmit";
 
 const drawerWidth = 240;
 
@@ -93,7 +90,7 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-const Admin = () => {
+const Employee = () => {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [count, setCount] = React.useState(1);
@@ -112,10 +109,6 @@ const Admin = () => {
 
   const linkSwitch2 = () => {
     setCount(2);
-  };
-
-  const linkSwitch3 = () => {
-    setCount(3);
   };
 
   return (
@@ -137,7 +130,7 @@ const Admin = () => {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" noWrap component="div">
-              管理者用ページ
+              社員用ページ
             </Typography>
           </Toolbar>
         </AppBar>
@@ -201,32 +194,7 @@ const Admin = () => {
                   <TagFacesIcon />
                 </ListItemIcon>
                 <ListItemText
-                  primary={"社員管理"}
-                  sx={{ opacity: open ? 1 : 0 }}
-                />
-              </ListItemButton>
-            </ListItem>
-            <ListItem key={"チャット"} disablePadding sx={{ display: "block" }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
-                }}
-                type="button"
-                onClick={linkSwitch3}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
-                  }}
-                >
-                  <ChatIcon />
-                </ListItemIcon>
-                <ListItemText
-                  primary={"チャット"}
+                  primary={"顔写真提出"}
                   sx={{ opacity: open ? 1 : 0 }}
                 />
               </ListItemButton>
@@ -238,10 +206,8 @@ const Admin = () => {
           {(() => {
             if (count === 1) {
               return <UserInfo />;
-            } else if (count === 2) {
-              return <Manage />;
             } else {
-              return <ChatSpace />;
+              return <FaceSubmit />;
             }
           })()}
         </Box>
@@ -250,4 +216,4 @@ const Admin = () => {
   );
 };
 
-export default Admin;
+export default Employee;

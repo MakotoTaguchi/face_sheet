@@ -7,8 +7,8 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 
 import Manage from "./Manage";
-import { db, storage } from "../firebase";
-import "./css/FaceGraph.css";
+import { db, storage } from "../../firebase";
+import "../css/FaceGraph.css";
 
 const FaceGraph = (props) => {
   const date1 = new Date();
