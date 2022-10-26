@@ -235,53 +235,6 @@ function FaceExpression({ image, file }) {
           );
         }
       })()}
-      {/* {num === 1 ? (
-        <FaceSubmit />
-      ) : (
-        <div className="container">
-          <div className="left">
-            <img
-              className="pushImage"
-              ref={imgRef}
-              crossOrigin="anonymous"
-              src={url}
-              alt=""
-            />
-          </div>
-          <div className="right">
-            {(() => {
-              if (object.length !== undefined) {
-                return (
-                  <div>
-                    <p>顔認識できません。</p>
-                    <p className="submit reset" onClick={Reset}>
-                      やり直す
-                    </p>
-                  </div>
-                );
-              } else {
-                return (
-                  <div>
-                    <p>顔認識成功</p>
-                    <p className="submit reset" onClick={Reset}>
-                      選び直す
-                    </p>
-                    <p
-                      className="submit reset"
-                      onClick={() => {
-                        Submit();
-                        OnFileUploadToFirebase();
-                      }}
-                    >
-                      提出
-                    </p>
-                  </div>
-                );
-              }
-            })()}
-          </div>
-        </div>
-      )} */}
     </Fragment>
   );
 }

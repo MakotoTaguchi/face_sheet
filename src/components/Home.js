@@ -15,7 +15,8 @@ function Home() {
 
   const judge = async () => {
     const querySnapshot = await getDocs(
-      query(collection(db, "users"), where("uid", "==", user.uid)));
+      query(collection(db, "users"), where("uid", "==", user.uid))
+    );
     querySnapshot.forEach((doc) => {
       setRole(doc.data().role);
       setId(doc.data().id);
@@ -26,28 +27,26 @@ function Home() {
     if (role === "admin") {
       return (
         <div>
-          <Admin />
-          {
-          (() => {
-            if(id === 0 || isNaN(id)){
-              return < Modal />;
-            } 
-          })()
-        }
+          {(() => {
+            if (id === 0 || isNaN(id)) {
+              return <Modal />;
+            } else {
+              return <Admin />;
+            }
+          })()}
         </div>
       );
     } else {
       return (
-      <div>
-        <Employee />
-        {
-          (() => {
-            if(id === 0 || isNaN(id)){
-              return < Modal />;
-            } 
-          })()
-        }
-      </div>
+        <div>
+          {(() => {
+            if (id === 0 || isNaN(id)) {
+              return <Modal />;
+            } else {
+              return <Employee />;
+            }
+          })()}
+        </div>
       );
     }
   } else {
