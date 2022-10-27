@@ -42,7 +42,7 @@ function Edit(props) {
     const id = Number(data.get("id"));
     const find = props.data.find((data) => data.id === id);
 
-    if (find == data[id]) {
+    if (find === data[id]) {
       setNum(2);
       // db追加
       const querySnapshot = await getDocs(

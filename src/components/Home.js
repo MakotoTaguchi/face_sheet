@@ -36,35 +36,6 @@ function Home() {
   } else {
     return <SignIn />;
   }
-
-  //   if (role === "admin") {
-  //     return (
-  //       <div>
-  //         {(() => {
-  //           if (id === 0 || isNaN(id)) {
-  //             return <Modal />;
-  //           } else {
-  //             return <Admin />;
-  //           }
-  //         })()}
-  //       </div>
-  //     );
-  //   } else {
-  //     return (
-  //       <div>
-  //         {(() => {
-  //           if (id === 0 || isNaN(id)) {
-  //             return <Modal />;
-  //           } else {
-  //             return <Employee />;
-  //           }
-  //         })()}
-  //       </div>
-  //     );
-  //   }
-  // } else {
-  //   return <SignIn />;
-  // }
 }
 
 export default Home;

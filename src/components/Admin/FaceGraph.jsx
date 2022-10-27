@@ -12,8 +12,7 @@ import "../css/FaceGraph.css";
 
 const FaceGraph = (props) => {
   const date1 = new Date();
-  const m = date1.getMonth() + 1;
-  const d = date1.getFullYear() + "年" + m + "月" + date1.getDate() + "日";
+  const [d, setD] = useState('');
   const [num, setNum] = useState();
   const [url, setUrl] = useState();
   const [facedata, setFacedata] = useState([{}]);
@@ -22,7 +21,7 @@ const FaceGraph = (props) => {
   const [button3, setButton3] = useState(false);
   const [button4, setButton4] = useState(false);
   const [button5, setButton5] = useState(false);
-
+  
   useEffect(() => {
     const q = query(
       collection(db, "expressions"),
@@ -38,13 +37,17 @@ const FaceGraph = (props) => {
       ref(storage, "image/" + props.count + "/" + d + ".jpeg")
     ).then((url) => {
       setUrl(url);
+    }).catch((e) => {
+      console.log(e.message);
+      setNum(3)
     });
-  }, [d, props.count]);
+  }, [d]);
 
   const Back = () => {
     setNum(1);
   };
-
+  console.log(facedata);
+  console.log(url);
   return (
     <div>
       {(() => {
@@ -71,14 +74,14 @@ const FaceGraph = (props) => {
                       setButton3(false);
                       setButton4(false);
                       setButton5(false);
+                      setD(date1.getFullYear() + "年" +
+                      (date1.getMonth()+1) + "月" +
+                      (date1.getDate()) + "日");
                     }}
                   >
-                    {date1.getFullYear() +
-                      "/" +
-                      m +
-                      "月" +
-                      date1.getDate() +
-                      "日"}
+                    {date1.getFullYear() + "/" +
+                      (date1.getMonth()+1) + "/" +
+                      (date1.getDate())}
                   </Button>
                   <Button
                     variant="outlined"
@@ -90,14 +93,16 @@ const FaceGraph = (props) => {
                       setButton3(false);
                       setButton4(false);
                       setButton5(false);
+                      setD(date1.getFullYear() + "年" +
+                      (date1.getMonth()+1) + "月" +
+                      (date1.getDate()-1) + "日");
                     }}
                   >
                     {date1.getFullYear() +
                       "/" +
-                      m +
-                      "月" +
-                      date1.getDate() +
-                      "日"}
+                      (date1.getMonth()+1) +
+                      "/" +
+                      (date1.getDate()-1)}
                   </Button>
                   <Button
                     variant="outlined"
@@ -109,14 +114,16 @@ const FaceGraph = (props) => {
                       setButton3(true);
                       setButton4(false);
                       setButton5(false);
+                      setD(date1.getFullYear() +"年" +
+                      (date1.getMonth()+1) +"月" +
+                      (date1.getDate()-2) +"日");
                     }}
                   >
                     {date1.getFullYear() +
                       "/" +
-                      m +
-                      "月" +
-                      date1.getDate() +
-                      "日"}
+                      (date1.getMonth()+1) +
+                      "/" +
+                      (date1.getDate()-2)}
                   </Button>
                   <Button
                     variant="outlined"
@@ -128,13 +135,16 @@ const FaceGraph = (props) => {
                       setButton3(false);
                       setButton4(true);
                       setButton5(false);
+                      setD(date1.getFullYear() +"年" +
+                      (date1.getMonth()+1) +"月" +
+                      (date1.getDate()-3) +"日");
                     }}
                   >
                     {date1.getFullYear() +
                       "/" +
-                      m +
+                      (date1.getMonth()+1) +
                       "月" +
-                      date1.getDate() +
+                      (date1.getDate()-3) +
                       "日"}
                   </Button>
                   <Button
@@ -147,14 +157,16 @@ const FaceGraph = (props) => {
                       setButton3(false);
                       setButton4(false);
                       setButton5(true);
+                      setD(date1.getFullYear() +"年" +
+                      (date1.getMonth()+1) +"月" +
+                      (date1.getDate()-4) +"日");
                     }}
                   >
                     {date1.getFullYear() +
                       "/" +
-                      m +
-                      "月" +
-                      date1.getDate() +
-                      "日"}
+                      (date1.getMonth()+1) +
+                      "/" +
+                      (date1.getDate()-4)}
                   </Button>
                 </div>
               </Box>
@@ -165,7 +177,7 @@ const FaceGraph = (props) => {
                       <div className="wrap">
                         <div className="face-graph">
                           <div className="image-area">
-                            <img src={url} />
+                            <img src={url} alt="" />
                             <p className="description">今日の画像</p>
                           </div>
                           {(() => {

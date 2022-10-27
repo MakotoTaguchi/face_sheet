@@ -42,7 +42,6 @@ function FaceExpression({ image, file }) {
           surprised: detections[0].expressions.surprised,
         },
         point: 3,
-        img: url,
       });
     } else if (detections[0].expressions.happy >= 0.8) {
       setObject({
@@ -56,7 +55,6 @@ function FaceExpression({ image, file }) {
           surprised: detections[0].expressions.surprised,
         },
         point: 2,
-        img: url,
       });
     } else if (detections[0].expressions.happy >= 0.5) {
       setObject({
@@ -70,7 +68,6 @@ function FaceExpression({ image, file }) {
           surprised: detections[0].expressions.surprised,
         },
         point: 1,
-        img: url,
       });
     } else {
       setObject({
@@ -84,7 +81,6 @@ function FaceExpression({ image, file }) {
           surprised: detections[0].expressions.surprised,
         },
         point: 0,
-        img: url,
       });
     }
   };
@@ -124,7 +120,6 @@ function FaceExpression({ image, file }) {
       sad: object.expressions.sad,
       surprised: object.expressions.surprised,
       id: getRef.data().id,
-      img: object.img,
     });
 
     const point = getRef.data().point + object.point;
