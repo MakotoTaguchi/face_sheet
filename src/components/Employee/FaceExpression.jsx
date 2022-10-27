@@ -22,8 +22,7 @@ function FaceExpression({ image, file }) {
   const [loading, setLoading] = useState(false);
   const [isUploaded, setIsUploaded] = useState(false);
   const date1 = new Date();
-  const m = date1.getMonth() + 1;
-  const d = date1.getFullYear() + "年" + m + "月" + date1.getDate() + "日";
+  const d = date1.getFullYear() + "年" + (date1.getMonth()+1) + "月" + date1.getDate() + "日";
 
   const handleImage = async () => {
     const detections = await faceapi
@@ -98,10 +97,6 @@ function FaceExpression({ image, file }) {
 
     imgRef.current && loadModels();
   }, []);
-
-  const Reset = () => {
-    setNum(1);
-  };
 
   const Submit = async () => {
     const querySnapshot = await getDocs(
@@ -200,7 +195,7 @@ function FaceExpression({ image, file }) {
                     return (
                       <div>
                         <p>顔認識できません。</p>
-                        <p className="submit reset" onClick={Reset}>
+                        <p className="submit reset" onClick={() => {setNum(1);}}>
                           やり直す
                         </p>
                       </div>
@@ -209,7 +204,7 @@ function FaceExpression({ image, file }) {
                     return (
                       <div>
                         <p>顔認識成功</p>
-                        <p className="submit reset" onClick={Reset}>
+                        <p className="submit reset" onClick={() => {setNum(1);}}>
                           選び直す
                         </p>
                         <p

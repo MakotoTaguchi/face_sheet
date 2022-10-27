@@ -41,13 +41,11 @@ const FaceGraph = (props) => {
       console.log(e.message);
       setNum(3)
     });
-  }, [d]);
+  }, [d, props.count]);
 
   const Back = () => {
     setNum(1);
   };
-  console.log(facedata);
-  console.log(url);
   return (
     <div>
       {(() => {
@@ -68,7 +66,6 @@ const FaceGraph = (props) => {
                     size="small"
                     disabled={button1}
                     onClick={() => {
-                      setNum(2);
                       setButton1(true);
                       setButton2(false);
                       setButton3(false);
@@ -171,7 +168,6 @@ const FaceGraph = (props) => {
                 </div>
               </Box>
               {(() => {
-                if (num === 2) {
                   if (url !== undefined) {
                     return (
                       <div className="wrap">
@@ -267,7 +263,6 @@ const FaceGraph = (props) => {
                       </div>
                     );
                   }
-                }
               })()}
             </div>
           );

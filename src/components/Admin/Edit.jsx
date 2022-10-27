@@ -31,20 +31,14 @@ function Edit(props) {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      id: data.get("id"),
-      name: data.get("name"),
-      email: data.get("email"),
-      point: data.get("point"),
-      role: data.get("role"),
-    });
-
     const id = Number(data.get("id"));
-    const find = props.data.find((data) => data.id === id);
+    const querySnapshot2 = await getDocs(
+      query(collection(db, "users"), where("id", "==", id)));
+    const q = querySnapshot2.docs.map((doc) => doc.id);
 
-    if (find === data[id]) {
+    if (q.length === 0) {
       setNum(2);
-      // db追加
+      // db更新
       const querySnapshot = await getDocs(
         query(collection(db, "users"), where("id", "==", props.count))
       );
@@ -61,14 +55,6 @@ function Edit(props) {
     }
   };
 
-  const Back = () => {
-    setNum(1);
-  };
-
-  const Back2 = () => {
-    setNum(0);
-  };
-
   return (
     <div>
       {(() => {
@@ -80,7 +66,7 @@ function Edit(props) {
               <ArrowBackRoundedIcon
                 sx={{ fontSize: 60 }}
                 className="back"
-                onClick={Back}
+                onClick={() => {setNum(1);}}
               />
               <p>変更が完了しました！</p>
             </div>
@@ -91,7 +77,7 @@ function Edit(props) {
               <ArrowBackRoundedIcon
                 sx={{ fontSize: 60 }}
                 className="back"
-                onClick={Back2}
+                onClick={() => {setNum(0);}}
               />
               <p>idが被っています</p>
             </div>
@@ -102,7 +88,7 @@ function Edit(props) {
               <ArrowBackRoundedIcon
                 sx={{ fontSize: 60 }}
                 className="back"
-                onClick={Back}
+                onClick={() => {setNum(1);}}
               />
               <ThemeProvider theme={theme}>
                 <Container component="main" maxWidth="xs">

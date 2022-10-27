@@ -34,14 +34,20 @@ const BasicModal = () => {
 
   const updateDB2 = async (id) => {
     const querySnapshot = await getDocs(
-      query(collection(db, "users"), where("uid", "==", auth.currentUser.uid))
-    );
-    const docId = querySnapshot.docs.map((doc) => doc.id).toString();
-    await updateDoc(doc(db, "users", docId), {
-      id: Number(id),
-    });
-    setId('');
-    setOpen(false);
+      query(collection(db, "users"), where("uid", "==", auth.currentUser.uid)));
+    const querySnapshot2 = await getDocs(
+      query(collection(db, "users"), where("id", "==", Number(id))));
+    const q = querySnapshot2.docs.map((doc) => doc.id);
+    if(q.length === 0){
+      const docId = querySnapshot.docs.map((doc) => doc.id).toString();
+      await updateDoc(doc(db, "users", docId), {
+        id: Number(id),
+      });
+      setId('');
+      setOpen(false);
+    }else {
+      console.log("id被り");
+    }
   };
 
   return (
