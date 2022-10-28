@@ -98,26 +98,6 @@ const Admin = () => {
   const [open, setOpen] = React.useState(false);
   const [count, setCount] = React.useState(1);
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-
-  const linkSwitch = () => {
-    setCount(1);
-  };
-
-  const linkSwitch2 = () => {
-    setCount(2);
-  };
-
-  const linkSwitch3 = () => {
-    setCount(3);
-  };
-
   return (
     <Fragment>
       <Box sx={{ display: "flex" }}>
@@ -127,7 +107,7 @@ const Admin = () => {
             <IconButton
               color="inherit"
               aria-label="open drawer"
-              onClick={handleDrawerOpen}
+              onClick={() => { setOpen(true); }}
               edge="start"
               sx={{
                 marginRight: 5,
@@ -143,7 +123,7 @@ const Admin = () => {
         </AppBar>
         <Drawer variant="permanent" open={open}>
           <DrawerHeader>
-            <IconButton onClick={handleDrawerClose}>
+            <IconButton onClick={() => { setOpen(false); }}>
               {theme.direction === "rtl" ? (
                 <ChevronRightIcon />
               ) : (
@@ -160,7 +140,7 @@ const Admin = () => {
                   justifyContent: open ? "initial" : "center",
                   px: 2.5,
                 }}
-                onClick={linkSwitch}
+                onClick={() => { setCount(1); }}
               >
                 <ListItemIcon
                   sx={{
@@ -189,7 +169,7 @@ const Admin = () => {
                   px: 2.5,
                 }}
                 type="button"
-                onClick={linkSwitch2}
+                onClick={() => { setCount(2); }}
               >
                 <ListItemIcon
                   sx={{
@@ -214,7 +194,7 @@ const Admin = () => {
                   px: 2.5,
                 }}
                 type="button"
-                onClick={linkSwitch3}
+                onClick={() => { setCount(3); }}
               >
                 <ListItemIcon
                   sx={{

@@ -43,9 +43,6 @@ const FaceGraph = (props) => {
     });
   }, [d, props.count]);
 
-  const Back = () => {
-    setNum(1);
-  };
   return (
     <div>
       {(() => {
@@ -57,7 +54,7 @@ const FaceGraph = (props) => {
               <ArrowBackRoundedIcon
                 sx={{ fontSize: 60 }}
                 className="back"
-                onClick={Back}
+                onClick={() => { setNum(1); }}
               />
               <Box className="buttonBox" sx={{ "& button": { m: 1 } }}>
                 <div>
