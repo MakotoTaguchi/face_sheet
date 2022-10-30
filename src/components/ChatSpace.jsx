@@ -1,42 +1,25 @@
-import * as React from "react";
-import * as ReactDOM from "react-dom";
-import { Chat } from "@progress/kendo-react-conversational-ui";
-import "./css/ChatSpace.css";
+import React from "react";
+import ChatMsg from "@mui-treasury/components/chatMsg/ChatMsg";
 
-const MessageTemplate = (props) => {
-  return (
-    <div className="k-bubble">
-      <div>{props.item.text}</div>
-    </div>
-  );
-};
-
-const user = {
-  id: 1,
-  name: "Jane",
-  avatarUrl:
-    "https://demos.telerik.com/kendo-ui/content/web/Customers/RICSU.jpg",
-};
-
-const ChatSpace = () => {
-  const [messages, setMessages] = React.useState([]);
-
-  const addNewMessage = (event) => {
-    setMessages([...messages, event.message]);
-  };
-
-  return (
-    <div className="ChatSpace">
-      <Chat
-        className="Chat"
-        user={user}
-        messages={messages}
-        onMessageSend={addNewMessage}
-        width={400}
-        messageTemplate={MessageTemplate}
-      />
-    </div>
-  );
-};
+const ChatSpace = () => (
+  <div>
+    <ChatMsg
+      avatar={""}
+      messages={[
+        "Hi Jenny, How r u today?",
+        "Did you train yesterday",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Volutpat lacus laoreet non curabitur gravida.",
+      ]}
+    />
+    <ChatMsg
+      side={"right"}
+      messages={[
+        "Great! What's about you?",
+        "Of course I did. Speaking of which check this out",
+      ]}
+    />
+    <ChatMsg avatar={""} messages={["Im good.", "See u later."]} />
+  </div>
+);
 
 export default ChatSpace;
