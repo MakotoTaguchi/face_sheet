@@ -30,7 +30,16 @@ const FaceGraph = (props) => {
   const [button3, setButton3] = useState(false);
   const [button4, setButton4] = useState(false);
   const [button5, setButton5] = useState(false);
-  const [trendButton, setTrendButton] = useState(true);
+  const [trendButton, setTrendButton] = useState(false);
+
+  let before = new Date(); //date関数が不要になる。
+  let week = [];
+  for (let i = 0; i < 7; i++) {
+    week.unshift(before.getMonth() + 1 + "月" + before.getDate() + "日");
+    before.setDate(before.getDate() - 1); //１日もどす
+  }
+
+  console.log(week);
 
   useEffect(() => {
     const q = query(
@@ -54,14 +63,8 @@ const FaceGraph = (props) => {
   }, [d, props.count]);
 
   useEffect(() => {
-    for (let i = 0; i <= 6; i++) {
-      const date =
-        date1.getFullYear() +
-        "年" +
-        (date1.getMonth() + 1) +
-        "月" +
-        (date1.getDate() - i) +
-        "日";
+    for (let i = 6; i >= 0; i--) {
+      const date = date1.getFullYear() + "年" + week[i];
 
       const p = query(
         collection(db, "expressions"),
@@ -76,34 +79,24 @@ const FaceGraph = (props) => {
     }
   }, []);
 
-  console.log(graphData);
+  if (graphData.length > 2) {
+    console.log(graphData[1].date);
+  }
 
   useEffect(() => {
     if (graphData.length === 2 || graphData.length === 1) {
       setGraphNum(1);
     } else if (graphData.length > 2) {
-      for (let i = 0; i <= 4; i++) {
-        for (let j = 0; j <= graphData.length - 1; j++) {
-          if (
-            graphData[j].date ===
-            date1.getFullYear() +
-              "年" +
-              (date1.getMonth() + 1) +
-              "月" +
-              (date1.getDate() - i) +
-              "日"
-          ) {
+      for (let i = 6; i >= 2; i--) {
+        console.log(week[i]);
+        for (let j = 1; j <= graphData.length - 1; j++) {
+          console.log(graphData[j].date);
+          if (graphData[j].date === date1.getFullYear() + "年" + week[i]) {
             setHappy((prevState) => [...prevState, graphData[j].happy]);
             break;
           } else if (
             j === graphData.length - 1 &&
-            graphData[j].date !=
-              date1.getFullYear() +
-                "年" +
-                (date1.getMonth() + 1) +
-                "月" +
-                (date1.getDate() - 4) +
-                "日"
+            graphData[j].date != date1.getFullYear() + "年" + week[2]
           ) {
             setHappy((prevState) => [...prevState, 0]);
           }
@@ -113,7 +106,7 @@ const FaceGraph = (props) => {
     }
   }, [graphData.length]);
 
-  // console.log(happy);
+  console.log(happy);
 
   return (
     <div>
@@ -137,18 +130,37 @@ const FaceGraph = (props) => {
                     size="small"
                     disabled={trendButton}
                     onClick={() => {
-                      setButton1(false);
-                      setButton2(false);
-                      setButton3(false);
-                      setButton4(false);
-                      setButton5(false);
-                      setTrendButton(true);
+                      // setButton1(false);
+                      // setButton2(false);
+                      // setButton3(false);
+                      // setButton4(false);
+                      // setButton5(false);
+                      // setTrendButton(true);
                       setD("trend");
                     }}
                   >
                     総合
                   </Button>
-                  <Button
+                  {(function () {
+                    const list = [];
+                    for (let i = 6; i >= 2; i--) {
+                      list.push(
+                        <Button
+                          variant="outlined"
+                          size="small"
+                          onClick={() => {
+                            setD(date1.getFullYear() + "年" + week[i]);
+                            console.log(week[i]);
+                          }}
+                        >
+                          {week[i]}
+                        </Button>
+                      );
+                    }
+                    return <div>{list}</div>;
+                  })()}
+
+                  {/* <Button
                     variant="outlined"
                     size="small"
                     disabled={button1}
@@ -160,12 +172,11 @@ const FaceGraph = (props) => {
                       setButton5(false);
                       setTrendButton(false);
                       setD(
-                        date1.getFullYear() +
-                          "年" +
-                          (date1.getMonth() + 1) +
-                          "月" +
-                          date1.getDate() +
-                          "日"
+                        date1.getFullYear() + "年" + week[6]
+                        // (date1.getMonth() + 1) +
+                        // "月" +
+                        // date1.getDate() +
+                        // "日"
                       );
                     }}
                   >
@@ -187,12 +198,11 @@ const FaceGraph = (props) => {
                       setButton5(false);
                       setTrendButton(false);
                       setD(
-                        date1.getFullYear() +
-                          "年" +
-                          (date1.getMonth() + 1) +
-                          "月" +
-                          (date1.getDate() - 1) +
-                          "日"
+                        date1.getFullYear() + "年" + week[5]
+                        // (date1.getMonth() + 1) +
+                        // "月" +
+                        // (date1.getDate() - 1) +
+                        // "日"
                       );
                     }}
                   >
@@ -282,7 +292,7 @@ const FaceGraph = (props) => {
                       (date1.getMonth() + 1) +
                       "/" +
                       (date1.getDate() - 4)}
-                  </Button>
+                  </Button> */}
                 </div>
               </Box>
               {(() => {
@@ -386,48 +396,23 @@ const FaceGraph = (props) => {
                                 <VictoryGroup
                                   data={[
                                     {
-                                      x:
-                                        date1.getFullYear() +
-                                        "/" +
-                                        (date1.getMonth() + 1) +
-                                        "/" +
-                                        date1.getDate(),
+                                      x: date1.getFullYear() + "/" + week[6],
                                       y: happy[1],
                                     },
                                     {
-                                      x:
-                                        date1.getFullYear() +
-                                        "/" +
-                                        (date1.getMonth() + 1) +
-                                        "/" +
-                                        (date1.getDate() - 1),
+                                      x: date1.getFullYear() + "/" + week[5],
                                       y: happy[2],
                                     },
                                     {
-                                      x:
-                                        date1.getFullYear() +
-                                        "/" +
-                                        (date1.getMonth() + 1) +
-                                        "/" +
-                                        (date1.getDate() - 2),
+                                      x: date1.getFullYear() + "/" + week[4],
                                       y: happy[3],
                                     },
                                     {
-                                      x:
-                                        date1.getFullYear() +
-                                        "/" +
-                                        (date1.getMonth() + 1) +
-                                        "/" +
-                                        (date1.getDate() - 3),
+                                      x: date1.getFullYear() + "/" + week[3],
                                       y: happy[4],
                                     },
                                     {
-                                      x:
-                                        date1.getFullYear() +
-                                        "/" +
-                                        (date1.getMonth() + 1) +
-                                        "/" +
-                                        (date1.getDate() - 4),
+                                      x: date1.getFullYear() + "/" + week[2],
                                       y: happy[5],
                                     },
                                   ]}
