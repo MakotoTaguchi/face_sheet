@@ -11,8 +11,9 @@ import {
   doc,
   getDoc,
 } from "firebase/firestore";
-import { auth, db, storage } from "../../firebase";
 import { ref, uploadBytesResumable } from "firebase/storage";
+
+import { auth, db, storage } from "../../firebase";
 
 function FaceExpression({ image, file }) {
   const { url } = image;
@@ -127,14 +128,12 @@ function FaceExpression({ image, file }) {
 
   const OnFileUploadToFirebase = async () => {
     const querySnapshot = await getDocs(
-      query(collection(db, "users"), where("uid", "==", auth.currentUser.uid))
-    );
+      query(collection(db, "users"), where("uid", "==", auth.currentUser.uid)));
     const docId = querySnapshot.docs.map((doc) => doc.id).toString();
     const getRef = await getDoc(doc(db, "users", docId));
     const storageRef = ref(
       storage,
-      "image/" + getRef.data().id + "/" + d + ".jpeg"
-    );
+      "image/" + getRef.data().id + "/" + d + ".jpeg");
     const uploadImage = uploadBytesResumable(storageRef, file);
 
     uploadImage.on(

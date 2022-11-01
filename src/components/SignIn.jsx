@@ -47,7 +47,6 @@ function Copyright(props) {
 }
 
 const theme = createTheme();
-
 // グーグルログイン
 const SignIn = () => {
   const signInWithGoogle = () => {
@@ -70,6 +69,7 @@ const SignIn = () => {
       point: 0,
       role: "employee",
       uid: auth.currentUser.uid,
+      url: auth.currentUser.photoURL,
     });
   };
 
@@ -81,6 +81,7 @@ const SignIn = () => {
     const docId = querySnapshot.docs.map((doc) => doc.id).toString();
     await updateDoc(doc(db, "users", docId), {
       login: serverTimestamp(),
+      url: auth.currentUser.photoURL
     });
   };
 

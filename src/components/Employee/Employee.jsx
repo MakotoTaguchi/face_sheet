@@ -18,10 +18,12 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import PersonIcon from "@mui/icons-material/Person";
 import TagFacesIcon from "@mui/icons-material/TagFaces";
+import ChatIcon from "@mui/icons-material/Chat";
 import { Fragment } from "react";
 
 import UserInfo from "../UserInfo";
 import FaceSubmit from "./FaceSubmit";
+import ChatSpace from "../ChatSpace";
 
 const drawerWidth = 240;
 
@@ -90,7 +92,7 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-const Employee = () => {
+const Employee = ({name, url, id}) => {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [count, setCount] = React.useState(1);
@@ -183,15 +185,42 @@ const Employee = () => {
                 />
               </ListItemButton>
             </ListItem>
+            <ListItem key={"チャット"} disablePadding sx={{ display: "block" }}>
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                }}
+                type="button"
+                onClick={() => { setCount(3); }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <ChatIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primary={"チャット"}
+                  sx={{ opacity: open ? 1 : 0 }}
+                />
+              </ListItemButton>
+            </ListItem>
           </List>
           <Divider />
         </Drawer>
         <Box className="main" component="main" sx={{ flexGrow: 1, p: 3 }}>
           {(() => {
             if (count === 1) {
-              return <UserInfo />;
-            } else {
+              return <UserInfo name={name} url={url}/>;
+            } else if (count === 2) {
               return <FaceSubmit />;
+            } else {
+              return <ChatSpace id={id}/>;
             }
           })()}
         </Box>

@@ -3,13 +3,13 @@ import { auth } from "../firebase";
 import SignOut from "./SignOut";
 import "./css/UserInfo.css";
 
-const UserInfo = () => {
+const UserInfo = ({name, url}) => {
   return (
     <div className="UserInfo">
-      <p>ようこそ {auth.currentUser.displayName} さん</p>
+      <p>ようこそ {name} さん</p>
       <img
         className="UserImage"
-        src={auth.currentUser.photoURL}
+        src={url}
         alt="profilephoto"
       />
       <SignOut />

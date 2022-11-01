@@ -93,7 +93,7 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-const Admin = () => {
+const Admin = ({name, url, id}) => {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [count, setCount] = React.useState(1);
@@ -217,11 +217,11 @@ const Admin = () => {
         <Box className="main" component="main" sx={{ flexGrow: 1, p: 3 }}>
           {(() => {
             if (count === 1) {
-              return <UserInfo />;
+              return <UserInfo name={name} url={url} />;
             } else if (count === 2) {
               return <Manage />;
             } else {
-              return <ChatSpace />;
+              return <ChatSpace id={id} />;
             }
           })()}
         </Box>
