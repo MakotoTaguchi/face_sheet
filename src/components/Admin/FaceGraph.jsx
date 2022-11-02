@@ -17,7 +17,6 @@ import { db, storage } from "../../firebase";
 import "../css/FaceGraph.css";
 
 const FaceGraph = (props) => {
-  const date1 = new Date();
   const [d, setD] = useState("trend");
   const [num, setNum] = useState();
   const [graphNum, setGraphNum] = useState();
@@ -25,12 +24,6 @@ const FaceGraph = (props) => {
   const [facedata, setFacedata] = useState([{}]);
   const [graphData, setGraphData] = useState([{}]);
   const [happy, setHappy] = useState([{}]);
-  const [button1, setButton1] = useState(false);
-  const [button2, setButton2] = useState(false);
-  const [button3, setButton3] = useState(false);
-  const [button4, setButton4] = useState(false);
-  const [button5, setButton5] = useState(false);
-  const [trendButton, setTrendButton] = useState(false);
 
   let before = new Date(); //date関数が不要になる。
   let week = [];
@@ -38,8 +31,6 @@ const FaceGraph = (props) => {
     week.unshift(before.getMonth() + 1 + "月" + before.getDate() + "日");
     before.setDate(before.getDate() - 1); //１日もどす
   }
-
-  console.log(week);
 
   useEffect(() => {
     const q = query(
@@ -52,7 +43,7 @@ const FaceGraph = (props) => {
         setFacedata(doc.data());
       });
     });
-    getDownloadURL(ref(storage, "image/" + props.count + "/" + d + ".jpeg"))
+    getDownloadURL(ref(storage, "image/" + props.count + "/" + before.getFullYear() + "年" + d + ".jpeg"))
       .then((url) => {
         setUrl(url);
       })
@@ -64,12 +55,10 @@ const FaceGraph = (props) => {
 
   useEffect(() => {
     for (let i = 6; i >= 0; i--) {
-      const date = date1.getFullYear() + "年" + week[i];
-
       const p = query(
         collection(db, "expressions"),
         where("id", "==", props.count),
-        where("date", "==", date)
+        where("date", "==", week[i])
       );
       onSnapshot(p, (expression) => {
         expression.forEach((doc) => {
@@ -91,12 +80,12 @@ const FaceGraph = (props) => {
         console.log(week[i]);
         for (let j = 1; j <= graphData.length - 1; j++) {
           console.log(graphData[j].date);
-          if (graphData[j].date === date1.getFullYear() + "年" + week[i]) {
+          if (graphData[j].date === week[i]) {
             setHappy((prevState) => [...prevState, graphData[j].happy]);
             break;
           } else if (
             j === graphData.length - 1 &&
-            graphData[j].date != date1.getFullYear() + "年" + week[2]
+            graphData[j].date !== week[2]
           ) {
             setHappy((prevState) => [...prevState, 0]);
           }
@@ -128,14 +117,7 @@ const FaceGraph = (props) => {
                   <Button
                     variant="outlined"
                     size="small"
-                    disabled={trendButton}
                     onClick={() => {
-                      // setButton1(false);
-                      // setButton2(false);
-                      // setButton3(false);
-                      // setButton4(false);
-                      // setButton5(false);
-                      // setTrendButton(true);
                       setD("trend");
                     }}
                   >
@@ -149,150 +131,15 @@ const FaceGraph = (props) => {
                           variant="outlined"
                           size="small"
                           onClick={() => {
-                            setD(date1.getFullYear() + "年" + week[i]);
-                            console.log(week[i]);
+                            setD(week[i]);
                           }}
                         >
-                          {week[i]}
+                          {before.getFullYear() + "年" + week[i]}
                         </Button>
                       );
                     }
                     return <div>{list}</div>;
                   })()}
-
-                  {/* <Button
-                    variant="outlined"
-                    size="small"
-                    disabled={button1}
-                    onClick={() => {
-                      setButton1(true);
-                      setButton2(false);
-                      setButton3(false);
-                      setButton4(false);
-                      setButton5(false);
-                      setTrendButton(false);
-                      setD(
-                        date1.getFullYear() + "年" + week[6]
-                        // (date1.getMonth() + 1) +
-                        // "月" +
-                        // date1.getDate() +
-                        // "日"
-                      );
-                    }}
-                  >
-                    {date1.getFullYear() +
-                      "/" +
-                      (date1.getMonth() + 1) +
-                      "/" +
-                      date1.getDate()}
-                  </Button>
-                  <Button
-                    variant="outlined"
-                    size="small"
-                    disabled={button2}
-                    onClick={() => {
-                      setButton1(false);
-                      setButton2(true);
-                      setButton3(false);
-                      setButton4(false);
-                      setButton5(false);
-                      setTrendButton(false);
-                      setD(
-                        date1.getFullYear() + "年" + week[5]
-                        // (date1.getMonth() + 1) +
-                        // "月" +
-                        // (date1.getDate() - 1) +
-                        // "日"
-                      );
-                    }}
-                  >
-                    {date1.getFullYear() +
-                      "/" +
-                      (date1.getMonth() + 1) +
-                      "/" +
-                      (date1.getDate() - 1)}
-                  </Button>
-                  <Button
-                    variant="outlined"
-                    size="small"
-                    disabled={button3}
-                    onClick={() => {
-                      setButton1(false);
-                      setButton2(false);
-                      setButton3(true);
-                      setButton4(false);
-                      setButton5(false);
-                      setTrendButton(false);
-                      setD(
-                        date1.getFullYear() +
-                          "年" +
-                          (date1.getMonth() + 1) +
-                          "月" +
-                          (date1.getDate() - 2) +
-                          "日"
-                      );
-                    }}
-                  >
-                    {date1.getFullYear() +
-                      "/" +
-                      (date1.getMonth() + 1) +
-                      "/" +
-                      (date1.getDate() - 2)}
-                  </Button>
-                  <Button
-                    variant="outlined"
-                    size="small"
-                    disabled={button4}
-                    onClick={() => {
-                      setButton1(false);
-                      setButton2(false);
-                      setButton3(false);
-                      setButton4(true);
-                      setButton5(false);
-                      setTrendButton(false);
-                      setD(
-                        date1.getFullYear() +
-                          "年" +
-                          (date1.getMonth() + 1) +
-                          "月" +
-                          (date1.getDate() - 3) +
-                          "日"
-                      );
-                    }}
-                  >
-                    {date1.getFullYear() +
-                      "/" +
-                      (date1.getMonth() + 1) +
-                      "/" +
-                      (date1.getDate() - 3)}
-                  </Button>
-                  <Button
-                    variant="outlined"
-                    size="small"
-                    disabled={button5}
-                    onClick={() => {
-                      setButton1(false);
-                      setButton2(false);
-                      setButton3(false);
-                      setButton4(false);
-                      setButton5(true);
-                      setTrendButton(false);
-                      setD(
-                        date1.getFullYear() +
-                          "年" +
-                          (date1.getMonth() + 1) +
-                          "月" +
-                          (date1.getDate() - 4) +
-                          "日"
-                      );
-                    }}
-                  >
-                    {date1.getFullYear() +
-                      "/" +
-                      (date1.getMonth() + 1) +
-                      "/" +
-                      (date1.getDate() - 4)}
-                  </Button> */}
                 </div>
               </Box>
               {(() => {
@@ -396,24 +243,24 @@ const FaceGraph = (props) => {
                                 <VictoryGroup
                                   data={[
                                     {
-                                      x: date1.getFullYear() + "/" + week[6],
-                                      y: happy[1],
+                                      x: week[2],
+                                      y: happy[5],
                                     },
                                     {
-                                      x: date1.getFullYear() + "/" + week[5],
-                                      y: happy[2],
-                                    },
-                                    {
-                                      x: date1.getFullYear() + "/" + week[4],
-                                      y: happy[3],
-                                    },
-                                    {
-                                      x: date1.getFullYear() + "/" + week[3],
+                                      x: week[3],
                                       y: happy[4],
                                     },
                                     {
-                                      x: date1.getFullYear() + "/" + week[2],
-                                      y: happy[5],
+                                      x: week[4],
+                                      y: happy[3],
+                                    },
+                                    {
+                                      x: week[5],
+                                      y: happy[2],
+                                    },
+                                    {
+                                      x: week[6],
+                                      y: happy[1],
                                     },
                                   ]}
                                 >

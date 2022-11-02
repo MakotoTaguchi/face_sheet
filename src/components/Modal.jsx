@@ -45,8 +45,6 @@ const BasicModal = () => {
       });
       setId('');
       setOpen(false);
-    }else {
-      console.log("id被り");
     }
   };
 
