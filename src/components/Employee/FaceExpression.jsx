@@ -116,6 +116,7 @@ function FaceExpression({ image, file }) {
       sad: object.expressions.sad,
       surprised: object.expressions.surprised,
       id: getRef.data().id,
+      point: object.point,
     });
 
     const point = getRef.data().point + object.point;

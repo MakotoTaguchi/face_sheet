@@ -77,9 +77,7 @@ const FaceGraph = (props) => {
       setGraphNum(1);
     } else if (graphData.length > 2) {
       for (let i = 6; i >= 2; i--) {
-        console.log(week[i]);
         for (let j = 1; j <= graphData.length - 1; j++) {
-          console.log(graphData[j].date);
           if (graphData[j].date === week[i]) {
             setHappy((prevState) => [...prevState, graphData[j].happy]);
             break;
