@@ -5,7 +5,7 @@ import MessageSubmitButton from './MessageSubmitButton';
 
 
 
-const MessageInputField = ({id}) => {
+const MessageInputField = ({id, name}) => {
   const inputEl = useRef(null);
   const [text, setText] = useState('');
   return (
@@ -15,6 +15,7 @@ const MessageInputField = ({id}) => {
       </Grid>
       <Grid item xs={10}>
         <MessageField 
+        name={name}
         inputEl={inputEl}
         setText={setText} 
         text={text} 
@@ -23,6 +24,7 @@ const MessageInputField = ({id}) => {
       <Grid item xs={1}>
         <MessageSubmitButton 
         id={id}
+        name={name}
         inputEl={inputEl}
         setText={setText} 
         text={text}

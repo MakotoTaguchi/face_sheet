@@ -221,7 +221,7 @@ const Admin = ({name, url, id}) => {
             } else if (count === 2) {
               return <Manage />;
             } else {
-              return <ChatSpace id={id} />;
+              return <ChatSpace id={id} name={name} />;
             }
           })()}
         </Box>
