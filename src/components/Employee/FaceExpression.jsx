@@ -22,15 +22,23 @@ function FaceExpression({ image, file }) {
   const [num, setNum] = useState();
   const [loading, setLoading] = useState(false);
   const [isUploaded, setIsUploaded] = useState(false);
-  const date1 = new Date();
-  const d = date1.getFullYear() + "年" + (date1.getMonth()+1) + "月" + date1.getDate() + "日";
+
+  let before = new Date(); //date関数が不要になる。
+  let week = [];
+  for (let i = 0; i < 7; i++) {
+    week.unshift(before.getMonth() + 1 + "月" + before.getDate() + "日");
+    before.setDate(before.getDate() - 1); //１日もどす
+  }
+
+  const d = week[6];
+  console.log(d);
 
   const handleImage = async () => {
     const detections = await faceapi
       .detectAllFaces(imgRef.current, new faceapi.TinyFaceDetectorOptions())
       .withFaceExpressions();
 
-    if (detections[0].expressions.happy >= 0.9) {
+    if (detections[0].expressions.happy >= 0.7) {
       setObject({
         expressions: {
           angry: detections[0].expressions.angry,
@@ -43,7 +51,11 @@ function FaceExpression({ image, file }) {
         },
         point: 3,
       });
-    } else if (detections[0].expressions.happy >= 0.8) {
+    } else if (
+      detections[0].expressions.happy >= 0.5 ||
+      detections[0].expressions.surprised >= 0.7 ||
+      detections[0].expressions.neutral >= 0.7
+    ) {
       setObject({
         expressions: {
           angry: detections[0].expressions.angry,
@@ -56,7 +68,11 @@ function FaceExpression({ image, file }) {
         },
         point: 2,
       });
-    } else if (detections[0].expressions.happy >= 0.5) {
+    } else if (
+      detections[0].expressions.happy >= 0.3 ||
+      detections[0].expressions.surprised >= 0.5 ||
+      detections[0].expressions.neutral >= 0.5
+    ) {
       setObject({
         expressions: {
           angry: detections[0].expressions.angry,
@@ -129,12 +145,14 @@ function FaceExpression({ image, file }) {
 
   const OnFileUploadToFirebase = async () => {
     const querySnapshot = await getDocs(
-      query(collection(db, "users"), where("uid", "==", auth.currentUser.uid)));
+      query(collection(db, "users"), where("uid", "==", auth.currentUser.uid))
+    );
     const docId = querySnapshot.docs.map((doc) => doc.id).toString();
     const getRef = await getDoc(doc(db, "users", docId));
     const storageRef = ref(
       storage,
-      "image/" + getRef.data().id + "/" + d + ".jpeg");
+      "image/" + getRef.data().id + "/" + d + ".jpeg"
+    );
     const uploadImage = uploadBytesResumable(storageRef, file);
 
     uploadImage.on(
@@ -195,7 +213,12 @@ function FaceExpression({ image, file }) {
                     return (
                       <div>
                         <p>顔認識できません。</p>
-                        <p className="submit reset" onClick={() => {setNum(1);}}>
+                        <p
+                          className="submit reset"
+                          onClick={() => {
+                            setNum(1);
+                          }}
+                        >
                           やり直す
                         </p>
                       </div>
@@ -204,7 +227,12 @@ function FaceExpression({ image, file }) {
                     return (
                       <div>
                         <p>顔認識成功</p>
-                        <p className="submit reset" onClick={() => {setNum(1);}}>
+                        <p
+                          className="submit reset"
+                          onClick={() => {
+                            setNum(1);
+                          }}
+                        >
                           選び直す
                         </p>
                         <p

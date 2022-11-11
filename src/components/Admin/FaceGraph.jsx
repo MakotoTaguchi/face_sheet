@@ -43,7 +43,7 @@ const FaceGraph = (props) => {
         setFacedata(doc.data());
       });
     });
-    getDownloadURL(ref(storage, "image/" + props.count + "/" + before.getFullYear() + "年" + d + ".jpeg"))
+    getDownloadURL(ref(storage, "image/" + props.count + "/" + d + ".jpeg"))
       .then((url) => {
         setUrl(url);
       })
@@ -68,22 +68,18 @@ const FaceGraph = (props) => {
     }
   }, []);
 
-  if (graphData.length > 2) {
-    console.log(graphData[1].date);
-  }
-
   useEffect(() => {
     if (graphData.length === 2 || graphData.length === 1) {
       setGraphNum(1);
     } else if (graphData.length > 2) {
       for (let i = 6; i >= 2; i--) {
         for (let j = 1; j <= graphData.length - 1; j++) {
-          if (graphData[j].date === week[i]) {
+          if (week[i] === graphData[j].date) {
             setHappy((prevState) => [...prevState, graphData[j].happy]);
             break;
           } else if (
             j === graphData.length - 1 &&
-            graphData[j].date !== week[2]
+            week[i] !== graphData[j].date
           ) {
             setHappy((prevState) => [...prevState, 0]);
           }
@@ -92,8 +88,6 @@ const FaceGraph = (props) => {
       setGraphNum(2);
     }
   }, [graphData.length]);
-
-  console.log(happy);
 
   return (
     <div>
@@ -235,7 +229,7 @@ const FaceGraph = (props) => {
                             <div>
                               <VictoryChart
                                 height={300}
-                                width={600}
+                                width={700}
                                 domainPadding={0}
                               >
                                 <VictoryGroup
@@ -266,6 +260,7 @@ const FaceGraph = (props) => {
                                   <VictoryScatter />
                                 </VictoryGroup>
                               </VictoryChart>
+                              <p className="description">5日間の笑顔の傾向</p>
                             </div>
                           );
                         }
