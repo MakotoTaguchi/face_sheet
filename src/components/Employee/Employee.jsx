@@ -19,11 +19,13 @@ import ListItemText from "@mui/material/ListItemText";
 import PersonIcon from "@mui/icons-material/Person";
 import TagFacesIcon from "@mui/icons-material/TagFaces";
 import ChatIcon from "@mui/icons-material/Chat";
+import InfoIcon from '@mui/icons-material/Info';
 import { Fragment } from "react";
 
 import UserInfo from "../UserInfo";
 import FaceSubmit from "./FaceSubmit";
 import ChatSpace from "../ChatSpace";
+import TalkList from "../TalkList";
 
 const drawerWidth = 240;
 
@@ -92,7 +94,7 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-const Employee = ({name, url, id}) => {
+const Employee = ({name, url, id, role}) => {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [count, setCount] = React.useState(1);
@@ -185,7 +187,7 @@ const Employee = ({name, url, id}) => {
                 />
               </ListItemButton>
             </ListItem>
-            <ListItem key={"チャット"} disablePadding sx={{ display: "block" }}>
+            <ListItem key={"お知らせ"} disablePadding sx={{ display: "block" }}>
               <ListItemButton
                 sx={{
                   minHeight: 48,
@@ -202,10 +204,35 @@ const Employee = ({name, url, id}) => {
                     justifyContent: "center",
                   }}
                 >
+                  <InfoIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primary={"お知らせ"}
+                  sx={{ opacity: open ? 1 : 0 }}
+                />
+              </ListItemButton>
+            </ListItem>
+            <ListItem key={"トーク"} disablePadding sx={{ display: "block" }}>
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                }}
+                type="button"
+                onClick={() => { setCount(4); }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
                   <ChatIcon />
                 </ListItemIcon>
                 <ListItemText
-                  primary={"チャット"}
+                  primary={"トーク"}
                   sx={{ opacity: open ? 1 : 0 }}
                 />
               </ListItemButton>
@@ -219,8 +246,10 @@ const Employee = ({name, url, id}) => {
               return <UserInfo name={name} url={url}/>;
             } else if (count === 2) {
               return <FaceSubmit />;
+            } else if(count === 3){
+              return <ChatSpace id={id} name={name} role={role} />;
             } else {
-              return <ChatSpace id={id} name={name} />;
+              return <TalkList role={role} id={id} />;
             }
           })()}
         </Box>

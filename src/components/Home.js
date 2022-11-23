@@ -33,9 +33,9 @@ function Home() {
       return <Modal />;
     } else {
       if (role === "admin") {
-        return <Admin name={name} url={url} id={id}/>;
+        return <Admin name={name} url={url} id={id} role={role}/>;
       } else {
-        return <Employee name={name} url={url} id={id} />;
+        return <Employee name={name} url={url} id={id} role={role}/>;
       }
     }
   } else {
