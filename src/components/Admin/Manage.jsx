@@ -3,7 +3,14 @@ import { useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { Button } from "@material-ui/core";
 import FaceGraph from "./FaceGraph";
-import { addDoc, collection, onSnapshot, where, query, getDocs } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  onSnapshot,
+  where,
+  query,
+  getDocs,
+} from "firebase/firestore";
 
 import { auth, db } from "../../firebase";
 import "../css/Manage.css";
@@ -11,43 +18,50 @@ import { useEffect } from "react";
 import Edit from "./Edit";
 import Talk from "../Talk";
 
-const Manage = ({id ,role}) => {
+const Manage = ({ id, role }) => {
   const [count, setCount] = useState();
-  
+
   const [num, setNum] = useState();
   const [name, setName] = useState();
   const [datas, setDatas] = useState([]);
   const [object, setObject] = useState({});
   let column;
-  if(role === "admin"){
-    column = "members2";
-  }else {
+  if (role === "admin") {
     column = "members";
+  } else {
+    column = "members2";
   }
 
   useEffect(() => {
-    const Snapshot = query(collection(db, "users"), where("role", "==", "employee"));
+    const Snapshot = query(
+      collection(db, "users"),
+      where("role", "==", "employee")
+    );
     onSnapshot(Snapshot, (user) => {
       setDatas(user.docs.map((doc) => ({ ...doc.data() })));
     });
   }, []);
 
-  const roomsDB = async (params, id, column) => {
+  const roomsDB = async (params, id) => {
     console.log(params);
     console.log(id);
-    console.log(column);
     const querySnapshot = await getDocs(
-      query(collection(db, "rooms"), where(column, "==", params.id)));
+      query(
+        collection(db, "rooms"),
+        where("members2", "==", params.id),
+        where("members", "==", id)
+      )
+    );
     const q = querySnapshot.docs.map((doc) => doc.id);
-    if(q.length === 0){
+    if (q.length === 0) {
       await addDoc(collection(db, "rooms"), {
         members: id,
         name: auth.currentUser.displayName,
         members2: params.row.id,
-        name2: params.row.name
+        name2: params.row.name,
       });
       console.log("登録");
-    }else {
+    } else {
       console.log("既存です");
     }
   };
@@ -115,7 +129,7 @@ const Manage = ({id ,role}) => {
             setCount(params.id);
             setName(params.row.name);
             setNum(3);
-            roomsDB(params, id, column);
+            roomsDB(params, id);
           }}
         >
           トーク
@@ -131,8 +145,8 @@ const Manage = ({id ,role}) => {
           return <Edit object={object} data={datas} count={count} />;
         } else if (num === 2) {
           return <FaceGraph count={count} />;
-        } else if(num === 3) {
-          return <Talk count={count} name={name} id={id}  role={role}/>;
+        } else if (num === 3) {
+          return <Talk count={count} name={name} id={id} role={role} />;
         } else {
           return (
             <div style={{ height: 400, width: "100%" }}>
