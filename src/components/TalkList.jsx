@@ -6,7 +6,7 @@ import {
   onSnapshot,
 } from "firebase/firestore";
 
-import { db } from "../firebase";
+import { db, messagesRef } from "../firebase";
 import { useEffect } from "react";
 
 const TalkList = ({role, id}) => {
@@ -26,16 +26,13 @@ const TalkList = ({role, id}) => {
         setRooms(room.docs.map((doc) => ( doc.data() )));
     });
   }, [Talk, id]);
-  console.log(rooms);
 
   return (
     <div>
       <div>こんにちは</div>
-      {(() => {
-        for(let i=0; i<rooms.length; i++){
-          <div>{rooms[i].name}</div>
-        }
-      })()}
+      {console.log(rooms)}
+      <div>
+      </div>
       <div>こんばんは</div>
     </div>
   );

@@ -33,6 +33,9 @@ const Manage = ({id ,role}) => {
   }, []);
 
   const roomsDB = async (params, id, column) => {
+    console.log(params);
+    console.log(id);
+    console.log(column);
     const querySnapshot = await getDocs(
       query(collection(db, "rooms"), where(column, "==", params.id)));
     const q = querySnapshot.docs.map((doc) => doc.id);
@@ -43,6 +46,9 @@ const Manage = ({id ,role}) => {
         members2: params.row.id,
         name2: params.row.name
       });
+      console.log("登録");
+    }else {
+      console.log("既存です");
     }
   };
 
