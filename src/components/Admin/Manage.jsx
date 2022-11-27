@@ -26,7 +26,7 @@ const Manage = ({id ,role}) => {
   }
 
   useEffect(() => {
-    const Snapshot = collection(db, "users");
+    const Snapshot = query(collection(db, "users"), where("role", "==", "employee"));
     onSnapshot(Snapshot, (user) => {
       setDatas(user.docs.map((doc) => ({ ...doc.data() })));
     });
