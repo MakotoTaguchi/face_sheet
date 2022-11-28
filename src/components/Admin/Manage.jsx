@@ -25,12 +25,6 @@ const Manage = ({ id, role }) => {
   const [name, setName] = useState();
   const [datas, setDatas] = useState([]);
   const [object, setObject] = useState({});
-  let column;
-  if (role === "admin") {
-    column = "members";
-  } else {
-    column = "members2";
-  }
 
   useEffect(() => {
     const Snapshot = query(

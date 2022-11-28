@@ -5,7 +5,7 @@ import TalkList from "./TalkList";
 
 const Talk = ({count, name, id, role}) => {
   const [num, setNum] = useState(0);
-
+  
   return (
     <div>
       {(() => {
@@ -24,7 +24,7 @@ const Talk = ({count, name, id, role}) => {
             </div>
           );
         }else {
-          return <TalkList  role={role} id={id}/>;
+          return <TalkList role={role} id={id}/>;
         }
       })()}
     </div>
