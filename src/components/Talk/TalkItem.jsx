@@ -7,7 +7,7 @@ import {
   Typography
 } from '@mui/material';
 
-const MessageItem = ({isLastItem, name, text, photoURL}) => {
+const MessageItem = ({isLastItem, name, text}) => {
   const ref = useRef(null);
 
   useEffect(() => {
@@ -19,7 +19,7 @@ const MessageItem = ({isLastItem, name, text, photoURL}) => {
   return (  
     <ListItem divider={true} ref={ref} >
         <ListItemAvatar>
-          <Avatar src={photoURL} />
+          <Avatar />
         </ListItemAvatar>
         <ListItemText
           primary={name}
@@ -40,4 +40,3 @@ const MessageItem = ({isLastItem, name, text, photoURL}) => {
 };
 
 export default MessageItem;
-
