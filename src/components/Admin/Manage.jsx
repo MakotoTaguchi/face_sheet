@@ -60,7 +60,7 @@ const Manage = ({ id, role }) => {
         members2: params.row.id,
         name2: params.row.name,
         members_photoURL: auth.currentUser.photoURL,
-        members2_photoURL: r
+        members2_photoURL: r[0]
       });
     }
   };
