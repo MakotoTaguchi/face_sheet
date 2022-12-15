@@ -80,6 +80,7 @@ const SignIn = () => {
     const docId = querySnapshot.docs.map((doc) => doc.id).toString();
     await updateDoc(doc(db, "users", docId), {
       login: serverTimestamp(),
+      photoURL: auth.currentUser.photoURL
     });
   };
 

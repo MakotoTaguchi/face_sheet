@@ -38,7 +38,7 @@ const TalkField = ({ inputEl, setText, text, count, id, role }) => {
       id: id,
       name: auth.currentUser.displayName,
       text: text,
-      photoURL: auth.currentUser.photoURL
+      photoURL: auth.currentUser.photoURL,
     });
   }
 

@@ -57,7 +57,7 @@ const TalkList = ({ role, id }) => {
                       }}
                       >
                       <ListItemAvatar>
-                        <Avatar alt={room.name2} src="/static/images/avatar/2.jpg" />
+                        <Avatar alt={room.name2} src={room.members2_photoURL[0]} />
                       </ListItemAvatar>
                       <ListItemText
                         primary={room.name2}
@@ -91,7 +91,7 @@ const TalkList = ({ role, id }) => {
                       }}
                       >
                       <ListItemAvatar>
-                        <Avatar alt={room.name} src="/static/images/avatar/2.jpg" />
+                        <Avatar alt={room.name} src={room.members_photoURL} />
                       </ListItemAvatar>
                       <ListItemText
                         primary={room.name}

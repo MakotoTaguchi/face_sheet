@@ -37,6 +37,14 @@ const Manage = ({ id, role }) => {
   }, []);
 
   const roomsDB = async (params, id) => {
+    const snapshot = await getDocs(
+      query(
+        collection(db, "users"),
+        where("id", "==", params.id)
+      )
+    );
+    const r = snapshot.docs.map((doc) => doc.data().photoURL);
+
     const querySnapshot = await getDocs(
       query(
         collection(db, "rooms"),
@@ -51,6 +59,8 @@ const Manage = ({ id, role }) => {
         name: auth.currentUser.displayName,
         members2: params.row.id,
         name2: params.row.name,
+        members_photoURL: auth.currentUser.photoURL,
+        members2_photoURL: r
       });
     }
   };
