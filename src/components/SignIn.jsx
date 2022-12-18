@@ -69,6 +69,7 @@ const SignIn = () => {
       point: 0,
       role: "employee",
       uid: auth.currentUser.uid,
+      photoURL: auth.currentUser.photoURL
     });
   };
 

@@ -8,7 +8,8 @@ import {
   limit,
 } from "firebase/firestore";
 
-import { db } from '../../firebase';
+import { db, auth } from '../../firebase';
+import "../css/TalkMessage.css";
 
 const TalkMessageList = ({ count, id, role }) => {
   const [messages, setMessages] = useState([]);
@@ -41,11 +42,13 @@ const TalkMessageList = ({ count, id, role }) => {
   }, [count, id])
 
   return (
-    <div>
+    <div className="msgs">
       {messages.map((message) => 
-      <div key={message.createdAt}>
+      <div key={message.createdAt} className={`msg ${
+        message.id === auth.currentUser.uid ? "sent" : "received"
+      }`}>
         <img src={message.photoURL} alt="" />
-        {message.text}
+        <p>{message.text}</p>
       </div>
       )}
     </div>

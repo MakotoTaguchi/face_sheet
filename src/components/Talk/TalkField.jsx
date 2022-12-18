@@ -35,7 +35,7 @@ const TalkField = ({ inputEl, setText, text, count, id, role }) => {
     const collectionPath = collection(db, "rooms", q, "messages");
     addDoc(collectionPath, {
       createdAt: serverTimestamp(),
-      id: id,
+      id: auth.currentUser.uid,
       name: auth.currentUser.displayName,
       text: text,
       photoURL: auth.currentUser.photoURL,
