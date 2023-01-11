@@ -24,5 +24,11 @@ yarn-error.log*
 
 /.firebase_config.js
 
+.firebaserc
+firebase.json
+database.rules.json
+firestore.rules
+storage.rules
+
 jmfa-22b45-firebase-adminsdk-y6p5i-a858992cf4.json
 
